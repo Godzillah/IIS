@@ -1,2 +1,2 @@
-# IIS2018
+# IIS
 Information Systems
