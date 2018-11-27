@@ -1,0 +1,60 @@
+html, body {
+    min-height: 100%
+}
+
+.background {
+    background: url("/~xorsak02/IIS/src/frontend/images/registrationImageBG.jpg");
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+#logoLoginPage {
+    top: 0;
+    bottom: 0;
+    margin: 0px 20px;
+}
+
+#loginLogo{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.div-center {
+    background: -moz-linear-gradient(left, rgba(243,226,199,1) 0%, rgba(193,158,103,1) 50%, rgba(193,158,103,1) 51%, rgba(233,212,179,1) 100%);
+    background: -webkit-linear-gradient(left, rgba(243,226,199,1) 0%, rgba(193,158,103,1) 50%, rgba(193,158,103,1) 51%, rgba(233,212,179,1) 100%);
+    background: -o-linear-gradient(left, rgba(243,226,199,1) 0%, rgba(193,158,103,1) 50%, rgba(193,158,103,1) 51%, rgba(233,212,179,1) 100%);
+    background: -ms-linear-gradient(left, rgba(243,226,199,1) 0%, rgba(193,158,103,1) 50%, rgba(193,158,103,1) 51%, rgba(233,212,179,1) 100%);
+    background: linear-gradient(to right, rgba(243,226,199,1) 0%, rgba(193,158,103,1) 50%, rgba(193,158,103,1) 51%, rgba(233,212,179,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3e2c7', endColorstr='#e9d4b3', GradientType=1 );
+    width: 450px;
+    height: 450px;
+    opacity: 0.9;
+    /*background-color: #abebff;*/
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    padding: 1em 2em;
+    border-bottom: 2px solid #cc9269;
+    border-radius: 20px;
+    display: table;
+}
+
+div.registerTable {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+
+
