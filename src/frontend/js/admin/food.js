@@ -365,7 +365,7 @@ function controlFoodInputs(new_type, new_description, new_price, counterOfTheRow
         }
         if(!$selectedLength.match($regexForInputIngredients)){
             $('#ingredients_row_' + counterOfTheRows+'').append("<div " + "id='badSelect"+counterOfTheRows+"'>Wrong select (at least 1 select)</div>");
-            $('#badSelect' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center"); 
+            $('#badSelect' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");  
         }
     }
 }
