@@ -1,6 +1,5 @@
-
 $( document ).ready(function()  {
-    console.log("Ahoj customerSoups.js");
+    console.log("Ahoj customerDrinks.js");
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
         type: "GET",
@@ -9,14 +8,15 @@ $( document ).ready(function()  {
             // handle the response
             console.log(response);
             var JsonObject = JSON.parse(response);
+
             for (var key in JsonObject) {
                 console.log(JsonObject[key].type);
                 // ak je jedno meal tak budeme appendovat
-                if(JsonObject[key].type === "soups"){
-                    $(".soupItems").append("<div class=\"soupItem\">\n" +
-                        "                    <div class=\"soupNamePriceDescription\">\n" +
-                        "                        <p class=\"soupNamePrice\"><b>"+JsonObject[key].description+"</b>....................................................."+JsonObject[key].price+" EUR</p>\n" +
-                        "                        <p class=\"soupDescription\">("+JsonObject[key].ingredients+")</p>\n" +
+                if(JsonObject[key].type === "drink"){
+                    $(".drinkItems").append("<div class=\"drinkItem\">\n" +
+                        "                    <div class=\"drinkNamePriceDescription\">\n" +
+                        "                        <p class=\"drinkNamePrice\"><b>"+JsonObject[key].description+"</b>....................................................."+JsonObject[key].price+" EUR</p>\n" +
+                        "                        <p class=\"drinkDescription\">("+JsonObject[key].ingredients+")</p>\n" +
                         "                    </div>\n" +
                         "                </div>" +
                         "                <br>");

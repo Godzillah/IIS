@@ -283,6 +283,7 @@ function clickTable(clicked_id){
                 if(JsonObject.success === false){
                     // osetrenie ak pride zly...
                     $('#alertYourReservationNumber').empty().append("Table has been already reserved at that time");
+                    $('#alertYourReservationNumber').removeClass("alert alert-success text-danger font-weight-bold text-center");
                     $('#alertYourReservationNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
                 }
                 else{
@@ -290,9 +291,9 @@ function clickTable(clicked_id){
                     $('#alertYourReservationNumber').removeClass("alert alert-danger text-danger font-weight-bold text-center");
                     $('#alertYourReservationNumber').addClass("alert alert-success text-success font-weight-bold text-center");
                     $('#alertYourReservationNumber').empty().append("Correct your reservation number is -> " + JsonObject.reservationId);
-                    $('#modalCreateReservationForm').data('hideInterval', setTimeout(function(){
+                    $('idOfCreateReservationModal').off().on('click', function() {
                         $('#modalCreateReservationForm').modal('hide');
-                    }, 2000));
+                    });
                 }
             },
         });
