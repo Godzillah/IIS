@@ -1,4 +1,3 @@
-
 $regexForInputNameOfIngredient= "^.{3}.*$";
 
 function checkboxFce(new_alergens){

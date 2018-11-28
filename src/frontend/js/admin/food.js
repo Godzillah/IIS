@@ -154,7 +154,7 @@ function add_concrete_row()
                     "<tr id='row"+table_len+"' class='text-center'>" +
                     "<td id='meal_row_"+table_len+"'>"+new_type+"</td>" +
                     "<td id='description_row_"+table_len+"'>"+new_description+"</td>" +
-                    "<td id='price_row_"+table_len+"'>"+new_price+"</td>" +
+                    "<td id='price_row_"+table_len+"'>"+new_price+" EUR</td>" +
                     "<td id='ingredients_row_"+table_len+"'>"+$selected+"" +
                     "</td>" +
                     "<td>" +
@@ -298,7 +298,7 @@ $( document ).ready(function()  {
                     "<tr id='row"+table_len+"' class='text-center'>" +
                     "<td id='meal_row_"+table_len+"'>"+JsonObject[key].type+"</td>" +
                     "<td id='description_row_"+table_len+"'>"+JsonObject[key].description+"</td>" +
-                    "<td id='price_row_"+table_len+"'>"+JsonObject[key].price+"</td>" +
+                    "<td id='price_row_"+table_len+"'>"+JsonObject[key].price+" EUR</td>" +
                     "<td id='ingredients_row_"+table_len+"'>"+JsonObject[key].ingredients+"</td>" +
                     "<td>" +
                     "<div id=first class='row justify-content-center'>" +
