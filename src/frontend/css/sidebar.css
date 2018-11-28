@@ -3,9 +3,8 @@
 .sidebar{
     padding-right: 20px;
     padding-top: 20px;
-    /*min-height: calc(100vh - 50px);*/
-    /*min-height: 100% !important;*/
-    height: 848px;
+    height: 854px;
+    overflow: hidden;
 }
 
 .nav-sidebar {
