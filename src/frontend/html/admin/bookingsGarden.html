@@ -2,22 +2,20 @@
 <html lang="en">
 <head>
     <title>Food</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
+    <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/~xorsak02/IIS/src/frontend/css/sidebar.css"/>
-    <link rel="stylesheet" href="/~xorsak02/IIS/src/frontend/css/style.css"/>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
+    <!-- TOTO ASI VYMAZEM....-->
+    <!--<link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">-->
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/mdb.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/js/admin/bookings.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
     <script>
         $(function(){
             $("#navigationPanel").load("/~xorsak02/IIS/src/frontend/html/navigations/navigationPanel.html");
@@ -126,13 +124,11 @@
                                             </div>
 
                                             <div class="md-form mb-5">
-                                                <!-- TODO: icon of telephone-->
                                                 <i class="fa fa-phone prefix grey-text"></i>
                                                 <input type="tel" id="idOfModalTelephone" class="form-control validate" placeholder="Your telephone">
                                             </div>
 
                                             <div class="md-form mb-5">
-                                                <!-- TODO: sem dorobit casti na JSON sa mi bude vracat vsetky casy ktore su dostupne.. -->
                                                 <i class="fa fa-clock-o prefix grey-text"></i>
                                                 <input type="text" id="idOfSelectTime" class="form-control validate" placeholder="Select time FORMAT: 10-01-2018 12:00">
                                             </div>

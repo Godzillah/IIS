@@ -1,12 +1,5 @@
 /* SIDEBAR*/
 
-.sidebar{
-    padding-right: 20px;
-    padding-top: 20px;
-    height: 854px;
-    overflow: hidden;
-}
-
 .nav-sidebar {
     position: fixed;
     bottom: 0;
