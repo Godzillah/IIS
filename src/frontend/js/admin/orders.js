@@ -3,7 +3,7 @@ $foodArray = [];
 // array of selected items...
 var $selected = [];
 // array of selected food
-$selectedFoodArray = []
+$selectedFoodArray = [];
 
 // regexes
 $regexForInputTableID= "^[0-9]+$";
@@ -22,10 +22,10 @@ function add_concrete_row()
 
     // sem bude kontrola
     if(!new_tableNumber.match($regexForInputOrderID)
-        || $selected.length < 1){
+        || $selected == null){
 
         console.log("wrong");
-        controlOrderInputs(new_tableNumber,  0, $selected.length);
+        controlOrderInputs(new_tableNumber,  0, $selected);
         return;
     }
     else{
@@ -159,6 +159,12 @@ function edit_concrete_row(counterOfTheRows)
         newOption.innerHTML = $foodArray[i];
         $('#selectPicker' + counterOfTheRows + '').selectpicker('refresh');
     }
+    // ziskanie ze sa zmeni selectnutych zloziek....
+    $('#selectPicker' + counterOfTheRows + '').off().on('change', function(){
+        $selectedFoodArray = $('#selectPicker' + counterOfTheRows + '').val();
+        console.log($selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
+        console.log("This is out of ->" + $selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
+    });
     // budu selectnute vsetky co su v riadku
     $('#selectPicker' + counterOfTheRows + '').selectpicker('val', $selectedFoodArray);
     $('#selectPicker' + counterOfTheRows + '').val();
@@ -171,19 +177,52 @@ function save_concrete_row(counterOfTheRows)
 {
     console.log("save here");
     var table_val=document.getElementById("table_text"+counterOfTheRows).value;
+    var order_val=document.getElementById("order_row_"+counterOfTheRows).innerHTML;
 
-    console.log("This is selected array -> " + $selectedFoodArray);
+    // sem bude kontrola
+    if(!table_val.match($regexForInputTableID)
+        || $selectedFoodArray == null){
+        console.log("wrong");
+        controlOrderInputs(table_val,  counterOfTheRows, $selectedFoodArray);
+        return;
+    }
+    else{
+        console.log($selectedFoodArray);
+        $.ajax({
+            url: "https://restaurant.memonil.com/order",
+            headers: {
+                "Authorization": sessionStorage.getItem("jwtToken")
+            },
+            type: "PUT",
+            data: JSON.stringify(
+                {
+                    "table_id": table_val,
+                    "meals": $selectedFoodArray,
+                    "order_id": order_val,
+                }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (response) {
+                // handle the response
+                console.log(response);
+                console.log("PUT method");
+                removeAlertTextForOrder(counterOfTheRows);
+                removeAlertClassesForOrder(counterOfTheRows);
+            },
+        });
+        document.getElementById("table_row_"+counterOfTheRows).innerHTML=table_val;
+        document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=$selectedFoodArray;
 
+        // skryt selectpicker
+        $('#selectPicker'+counterOfTheRows+'').selectpicker('hide');
+        document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
+        document.getElementById("delete_button_index_"+counterOfTheRows).style.display="inline-block";
+        document.getElementById("save_button_index_"+counterOfTheRows).style.display="none";
+        // pozastavanie fce inak by doslo k situacii ze by sa prv reloadla a nezachovalavi by sa zmeny
+        setTimeout(function(){
+            location.reload(true);
+        }, 100);
+    }
 
-
-    document.getElementById("table_row_"+counterOfTheRows).innerHTML=table_val;
-    document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=$selectedFoodArray;
-
-    // skryt selectpicker
-    $('#selectPicker'+counterOfTheRows+'').selectpicker('hide');
-    document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
-    document.getElementById("delete_button_index_"+counterOfTheRows).style.display="inline-block";
-    document.getElementById("save_button_index_"+counterOfTheRows).style.display="none";
 }
 
 $( document ).ready(function()  {
@@ -291,7 +330,7 @@ function controlOrderInputs(new_tableOrder , counterOfTheRows, $selectedLength){
             $('#table_row_' + counterOfTheRows+'').append("<div " + "id='badTableNumber"+counterOfTheRows+"'>Wrong table number (must be number)</div>");
             $('#badTableNumber' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if(!$selectedLength.match($regexForInputMeals)){
+        if($selectedLength < 1){
             $('#meal_row_' + counterOfTheRows+'').append("<div " + "id='badSelectItems"+counterOfTheRows+"'>Wrong select (at least 1 select)</div>");
             $('#badSelectItems' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }

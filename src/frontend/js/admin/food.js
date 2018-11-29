@@ -199,6 +199,7 @@ function delete_concrete_row(counterOfTheRows)
     var ingredients_val=document.getElementById("ingredients_row_"+counterOfTheRows).innerHTML;
 
     var ingredientsArrayn = ingredients_val.split(",");
+
     console.log(ingredientsArrayn);
 
 
