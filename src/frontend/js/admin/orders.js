@@ -2,6 +2,8 @@
 $foodArray = [];
 // array of selected items...
 var $selected = [];
+// array of selected food
+$selectedFoodArray = []
 
 // regexes
 $regexForInputTableID= "^[0-9]+$";
@@ -136,41 +138,48 @@ function edit_concrete_row(counterOfTheRows)
 
     var table=document.getElementById("table_row_"+counterOfTheRows);
     var meal=document.getElementById("meal_row_input_"+counterOfTheRows);
-    var selectPickerRow=document.getElementById("selectPicker"+table_len);
+    var selectPickerRow=document.getElementById("selectPicker"+counterOfTheRows);
 
     var table_data=table.innerHTML;
     var meal_data=meal.innerHTML;
 
     table.innerHTML="<input class='form-control' type='text' id='table_text"+counterOfTheRows+"' value='"+table_data+"'>"
-    meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"'>";
+    meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"' disabled>";
 
-    var foodArray = meal_data.split(",");
+    $selectedFoodArray = meal_data.split(",");
 
+    // reset values of selectpicker
+    $('#selectPicker' + counterOfTheRows + '').empty();
     console.log("removing atrr hiideen on row -> " + counterOfTheRows);
     // naplnenie jednotliveho selectpickeru...
-    for (var i = 0; i < foodArray.length; i++) {
-        console.log("Pridavam2 -> " + foodArray[i]);
+    for (var i = 0; i < $foodArray.length; i++) {
+        console.log("Pridavam2 -> " + $foodArray[i]);
         newOption = document.createElement("option");
         selectPickerRow.appendChild(newOption);
-        newOption.innerHTML = foodArray[i];
-        $('#selectPicker'+counterOfTheRows+'').selectpicker('refresh');
-
+        newOption.innerHTML = $foodArray[i];
+        $('#selectPicker' + counterOfTheRows + '').selectpicker('refresh');
+    }
+    // budu selectnute vsetky co su v riadku
+    $('#selectPicker' + counterOfTheRows + '').selectpicker('val', $selectedFoodArray);
+    $('#selectPicker' + counterOfTheRows + '').val();
+    console.log("Toto su hodnoty----> " + $('#selectPicker' + counterOfTheRows + '').val());
+    // ukazeme selectpicker
     $('#selectPicker'+counterOfTheRows+'').selectpicker('show');
-
-}
-
-
 }
 
 function save_concrete_row(counterOfTheRows)
 {
     console.log("save here");
     var table_val=document.getElementById("table_text"+counterOfTheRows).value;
-    var meal_val=document.getElementById("meal_text"+counterOfTheRows).value;
+
+    console.log("This is selected array -> " + $selectedFoodArray);
+
+
 
     document.getElementById("table_row_"+counterOfTheRows).innerHTML=table_val;
-    document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=meal_val;
+    document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=$selectedFoodArray;
 
+    // skryt selectpicker
     $('#selectPicker'+counterOfTheRows+'').selectpicker('hide');
     document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
     document.getElementById("delete_button_index_"+counterOfTheRows).style.display="inline-block";
