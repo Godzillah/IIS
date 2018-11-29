@@ -26,6 +26,10 @@ $(document).ready(function (){
                     //TODO: if(usernameFromInput === 'test' && passwordFromInput === 'test') { location.href = /IIS/src/frontend/html/admin/adminHomePage.html
                     //TODO: else {   location.href = /IIS/src/frontend/html/admin/employeeHomePage.html }
                     // prejde do adminHomePage.html...
+                    if(JsonObject.success == false){
+                        wrongRegistrationsInputs();
+                        return;
+                    }
                     console.log("Ukladam jwtToken do sessionStorage");
                     sessionStorage.setItem("jwtToken", JsonObject.payload.jwt);
                     console.log("this is -> "  + sessionStorage.getItem("jwtToken"));
