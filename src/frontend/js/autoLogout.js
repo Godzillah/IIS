@@ -1,36 +1,36 @@
-// TODO: prevziate prepisat...
-// https://forums.asp.net/t/1899214.aspx?If+no+activity+for+15+minutes+display+an+alert+on+web+page+and+then+either+continue+or+logout
+// after ten minutes of inactivity logout a redirect to loginPage.html
+var startingSecondToLogout = 600; // 10 minutes (600s)
+var sessionSeconds = 0;
 
-// Set timeout variables.
-var timoutWarning = 840000; // Display warning in 14 Mins.
-var timoutNow = 900000; // Timeout in 15 mins.
-var logoutUrl = 'http://domain.com/logout.aspx'; // URL to logout page.
-
-var warningTimer;
-var timeoutTimer;
-
-// Start timers.
-function StartTimers() {
-    warningTimer = setTimeout("IdleWarning()", timoutWarning);
-    timeoutTimer = setTimeout("IdleTimeout()", timoutNow);
-}
-
-// Reset timers.
-function ResetTimers() {
-    clearTimeout(warningTimer);
-    clearTimeout(timeoutTimer);
-    StartTimers();
-    $("#timeout").dialog('close');
-}
-
-// Show idle timeout warning dialog.
-function IdleWarning() {
-    $("#timeout").dialog({
-        modal: true
+// on key press reseting timer
+$(function () {
+    $("body").on('click keypress', function () {
+        sessionSeconds = 0;
     });
+});
+// on mouse move reseting timer
+$(function(){
+    $("body").mousemove(function(){
+        sessionSeconds = 0;
+    });
+});
+
+// redirect and alert..
+function redirectAndAlert(){
+    location.href = "/~xorsak02/IIS/src/frontend/html/loginPage.html";
+    alert("For inactive 15 minutes you were redirected to loginPage");
 }
 
-// Logout the user.
-function IdleTimeout() {
-    window.location = logoutUrl;
+// logout session starts
+function startLogoutSession() {
+    sessionSeconds++;
+    if (sessionSeconds > startingSecondToLogout) {
+        clearTimeout(secondTimer);
+        redirectAndAlert();
+        return;
+    }
+    // logout session repeating every second
+    secondTimer = setTimeout("startLogoutSession()", 1000);
 }
+
+startLogoutSession();

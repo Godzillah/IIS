@@ -76,25 +76,27 @@
 
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="new_type">
+                            <input type="text" class="form-control text-center" id="new_type" placeholder="drink/pizza/meat/soups (required)">
                             <div id="badType"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="new_description">
+                            <input type="text" class="form-control text-center" id="new_description" placeholder="name of food (required)">
                             <div id="badDescription"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="new_price">
+                            <input type="text" class="form-control text-center" id="new_price" placeholder="format: 2.53 (required)">
                             <div id="badPrice"></div>
                         </td>
                         <td id="select">
-                            <input type="text" class="form-control" id="new_ingredients" hidden>
-                            <script>
-                                $('select').selectpicker();
-                            </script>
-                            <select id="selectPickerID" class="selectpicker" multiple data-live-search="true">
-                            </select>
-                            <div id="badSelect"></div>
+                            <div class="row justify-content-center">
+                                <input type="text" class="form-control text-center" id="new_ingredients" hidden>
+                                <script>
+                                    $('select').selectpicker();
+                                </script>
+                                <select id="selectPickerID" class="selectpicker" multiple data-live-search="true">
+                                </select>
+                                <div id="badSelect"></div>
+                            </div>
                         </td>
                         <td>
                             <div class="row justify-content-center class='text-center'">
