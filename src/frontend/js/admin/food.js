@@ -29,6 +29,8 @@ function edit_concrete_row(counterOfTheRows)
     var price_data=price.innerHTML;
     var ingredients_data=ingredients.innerHTML;
 
+    var price_data = price_data.replace(" EUR", "");
+
     meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"'>";
     price.innerHTML="<input class='form-control' type='text' id='price_text"+counterOfTheRows+"' value='"+price_data+"'>";
     description.innerHTML="<input class='form-control' type='text' id='description_text"+counterOfTheRows+"' value='"+description_data+"' disabled>";
@@ -94,7 +96,7 @@ function save_concrete_row(counterOfTheRows) {
             });
         document.getElementById("meal_row_"+counterOfTheRows).innerHTML=meal_val;
         document.getElementById("description_row_"+counterOfTheRows).innerHTML=description_val;
-        document.getElementById("price_row_"+counterOfTheRows).innerHTML=price_val;
+        document.getElementById("price_row_"+counterOfTheRows).innerHTML=price_val + " EUR";
         document.getElementById("ingredients_row_"+counterOfTheRows).innerHTML=ingredients_val;
 
         document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
