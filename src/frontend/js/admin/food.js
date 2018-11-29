@@ -221,18 +221,20 @@ function delete_concrete_row(counterOfTheRows)
     var meal_val=document.getElementById("meal_row_"+counterOfTheRows).innerHTML;
     var description_val=document.getElementById("description_row_"+counterOfTheRows).innerHTML;
     var price_val=document.getElementById("price_row_"+counterOfTheRows).innerHTML;
-    var ingredients_val=document.getElementById("ingredients_row_"+counterOfTheRows).innerHTML;
+    var ingredients_val=document.getElementById("ingredients_row_input_"+counterOfTheRows).innerHTML;
 
     var ingredientsArrayn = ingredients_val.split(",");
 
     console.log(ingredientsArrayn);
 
+    // orezanie o EUR
+    price_val = price_val.replace(" EUR", "");
 
     console.log("toto posielam" + "\n" +
         "M:" + meal_val + "\n" +
         "D:" + description_val + "\n" +
         "P:" + price_val + "\n" +
-        "I:" + ingredientsArrayn + "\n");
+        "I:" + JSON.stringify(ingredientsArrayn) + "\n");
 
     $('#confirmDeleteModalYes').off().on('click',function(){
         $.ajax({

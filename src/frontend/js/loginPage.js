@@ -29,7 +29,7 @@ $(document).ready(function (){
                     console.log("Ukladam jwtToken do sessionStorage");
                     sessionStorage.setItem("jwtToken", JsonObject.payload.jwt);
                     console.log("this is -> "  + sessionStorage.getItem("jwtToken"));
-                    location.href = "/~xorsak02/IIS/src/frontend/html/admin/adminHomePage.html"
+                    location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
                 },
             });
         }

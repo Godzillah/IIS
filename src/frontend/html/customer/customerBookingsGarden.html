@@ -16,7 +16,6 @@
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/mdb.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/js/admin/employees.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!-- MY SCRIPTS -->
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/js/customer/customerBookingMain.js"></script>
@@ -40,151 +39,198 @@
             <a href="/~xorsak02/IIS/src/frontend/html/index.html"> back to main page</a>
             <h1 class="h1 text-primary">Choose TABLE</h1>
         </div>
-
-        <a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html"><button class="btn btn-info"> Switch to interier</button></a>
-        <a data-toggle="modal" data-target="#modalChangeReservation"><button class="btn btn-primary"> Change reservation</button></a>
-        <a data-toggle="modal" data-target="#modalDeleteReservation"><button class="btn btn-danger"> Delete reservation</button></a>
-
-        <div class="row mr-2 ml-2">
-            <div class="card-deck">
-                <div class="card mb-3">
-                    <div class="view overlay">
-                        <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
-                        <!-- CHANGE RESERVATION MODAL-->
-                        <div class="modal fade" id="modalChangeReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h4 class="modal-title w-100 font-weight-bold">Change reservation</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mx-3">
-                                        <div class="md-form mb-4">
-                                            <i class="fa fa-key prefix grey-text"></i>
-                                            <input type="text" id="idOfTheReservation" class="form-control validate" placeholder="Your reservation number">
+        <div class="col-12 justify-content-center">
+            <div class="row justify-content-center">
+                <a data-toggle="modal" data-target="#modalChangeReservation"><button class="btn btn-primary"> Change reservation</button></a>
+                <a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html"><button class="btn btn-info"> Switch to interier</button></a>
+                <a data-toggle="modal" data-target="#modalDeleteReservation"><button class="btn btn-danger"> Delete reservation</button></a>
+            </div>
+            <div class="row ml-4 mr-4">
+                <div class="card-deck">
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <!-- CHANGE RESERVATION MODAL-->
+                            <div class="modal fade" id="modalChangeReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold">Change reservation</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div id="idOfRezervationDoesNotExists"></div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <button id="idChangeReservationButton" class="btn btn-default" data-target="#modalCreateReservationForm" onclick="clickEditReservation()">Change reservation</button>
+                                        <div class="modal-body mx-3">
+                                            <div class="md-form mb-4">
+                                                <i class="fa fa-key prefix grey-text"></i>
+                                                <input type="text" id="idOfTheReservation" class="form-control validate" placeholder="Your reservation number">
+                                            </div>
+                                        </div>
+                                        <div id="idOfRezervationDoesNotExists"></div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button id="idChangeReservationButton" class="btn btn-default" data-target="#modalCreateReservationForm" onclick="clickEditReservation()">Change reservation</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- DELETE MODAL -->
-                        <div class="modal fade" id="modalDeleteReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h4 class="modal-title w-100 font-weight-bold">Delete Reservation</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mx-3">
-                                        <div class="md-form mb-4">
-                                            <i class="fa fa-key prefix grey-text"></i>
-                                            <input type="text" id="idOfTheDeletingReservation" class="form-control validate" placeholder="Your reservation number">
+                            <!-- DELETE MODAL -->
+                            <div class="modal fade" id="modalDeleteReservation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold">Delete Reservation</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div id="idOfRezervationDoesNotExistsDelete"></div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <button id="idDeleteReservationButton" class="btn btn-danger" onclick="clickDeleteReservation()">Delete reservation</button>
+                                        <div class="modal-body mx-3">
+                                            <div class="md-form mb-4">
+                                                <i class="fa fa-key prefix grey-text"></i>
+                                                <input type="text" id="idOfTheDeletingReservation" class="form-control validate" placeholder="Your reservation number">
+                                            </div>
+                                        </div>
+                                        <div id="idOfRezervationDoesNotExistsDelete"></div>
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button id="idDeleteReservationButton" class="btn btn-danger" onclick="clickDeleteReservation()">Delete reservation</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- REF FOR MODAL...-->
+                            <!-- REF FOR MODAL...-->
 
-                        <!-- TABLE CREATE RESERVATION MODAL-->
-                        <div class="modal fade" id="modalCreateReservationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header text-center">
-                                        <h4 class="modal-title w-100 font-weight-bold">Reservation</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body mx-3">
+                            <!-- TABLE CREATE RESERVATION MODAL-->
+                            <div class="modal fade" id="modalCreateReservationForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold">Reservation</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mx-3">
 
-                                        <div class="md-form mb-4">
-                                            <i class="fa fa-user prefix grey-text"></i>
-                                            <input type="text" id="idOfModalName" class="form-control validate" placeholder="Your name">
-                                        </div>
-                                        <div class="md-form mb-4">
-                                            <i class="fa fa-user prefix grey-text"></i>
-                                            <input type="text" id="idOfModalSurname" class="form-control validate" placeholder="Your surname">
-                                        </div>
+                                            <div class="md-form mb-4">
+                                                <i class="fa fa-user prefix grey-text"></i>
+                                                <input type="text" id="idOfModalName" class="form-control validate" placeholder="Your name">
+                                            </div>
+                                            <div class="md-form mb-4">
+                                                <i class="fa fa-user prefix grey-text"></i>
+                                                <input type="text" id="idOfModalSurname" class="form-control validate" placeholder="Your surname">
+                                            </div>
 
-                                        <div class="md-form mb-5">
-                                            <i class="fa fa-envelope prefix grey-text"></i>
-                                            <input type="email" id="idOfModalEmail" class="form-control validate " placeholder="Your email">
-                                        </div>
+                                            <div class="md-form mb-5">
+                                                <i class="fa fa-envelope prefix grey-text"></i>
+                                                <input type="email" id="idOfModalEmail" class="form-control validate " placeholder="Your email">
+                                            </div>
 
-                                        <div class="md-form mb-5">
-                                            <!-- TODO: icon of telephone-->
-                                            <i class="fa fa-phone prefix grey-text"></i>
-                                            <input type="tel" id="idOfModalTelephone" class="form-control validate" placeholder="Your telephone">
-                                        </div>
+                                            <div class="md-form mb-5">
+                                                <i class="fa fa-phone prefix grey-text"></i>
+                                                <input type="tel" id="idOfModalTelephone" class="form-control validate" placeholder="Your telephone">
+                                            </div>
 
-                                        <div class="md-form mb-5">
-                                            <!-- TODO: sem dorobit casti na JSON sa mi bude vracat vsetky casy ktore su dostupne.. -->
-                                            <i class="fa fa-clock-o prefix grey-text"></i>
-                                            <input type="text" id="idOfSelectTime" class="form-control validate" placeholder="Select time FORMAT: 10-01-2018 12:00">
+                                            <div class="md-form mb-5">
+                                                <i class="fa fa-clock-o prefix grey-text"></i>
+                                                <input type="text" id="idOfSelectTime" class="form-control validate" placeholder="Select time FORMAT: 10-01-2018 12:00">
+                                            </div>
+                                            <div class="md-form mb-5">
+                                                <i class="fa fa-time prefix grey-text"></i>
+                                                <p type="text" id="idOfReservedTimes" placeholder="Already reserved times">
+                                            </div>
+                                            <div id="alertYourReservationNumber"></div>
                                         </div>
-
-                                        <div class="md-form mb-5">
-                                            <i class="fa fa-time prefix grey-text"></i>
-                                            <p type="text" id="idOfReservedTimes" placeholder="Already reserved times">
+                                        <div class="modal-footer d-flex justify-content-center">
+                                            <button id="idOfCreateReservationModal" class="btn btn-default">Confirm</button>
                                         </div>
-                                        <div id="alertYourReservationNumber"></div>
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-center">
-                                        <button id="idOfCreateReservationModal" class="btn btn-default">Confirm</button>
                                     </div>
                                 </div>
                             </div>
+                            <a id="1" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
                         </div>
-                        <a id="5" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 8</h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title text-center">Table number 5</h4>
+
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="2" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 9</h4>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="3" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 10</h4>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card mb-3">
-                    <div class="view overlay">
-                        <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
-                        <a id="6" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
+            </div>
+            <div class="row ml-4 mr-4">
+                <div class="card-deck">
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="5" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 11</h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title text-center">Table number 6</h4>
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="6" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 12</h4>
+                        </div>
                     </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="view overlay">
-                        <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
-                        <a id="7" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="7" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 13</h4>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h4 class="card-title text-center">Table number 7</h4>
+                    <div class="card mb-3">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="/~xorsak02/IIS/src/frontend/images/transparent.png" alt="Card image cap">
+                            <a id="4" href="#!" data-toggle="modal" data-target="#modalCreateReservationForm" onclick="clickTable(this.id)">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title text-center">Table number 14</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </body>
 </html>
