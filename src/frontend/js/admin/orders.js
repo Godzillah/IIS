@@ -14,10 +14,6 @@ function add_concrete_row()
     var new_tableNumber=document.getElementById("new_table_number").value;
     var new_meals=document.getElementById("new_meals").value;
 
-    // vycistenie existujuceho order id ...
-    $('#badTableOrder').empty();
-    $('#badTableOrder').removeClass("alert alert-danger text-danger font-weight-bold text-center");
-
     console.log("posiela sa : " +
     "\nTable number:" + new_tableNumber+
         "\nMEALS:" + $selected);
@@ -51,7 +47,7 @@ function add_concrete_row()
                     "<tr id='row"+table_len+"' class='text-center'>" +
                     "<td></td>" +
                     "<td id='table_row_"+table_len+"'>"+new_tableNumber+"</td>" +
-                    "<td id='meal_row_"+table_len+"'>"+$selected+"" +
+                    "<td id='meal_row_input_"+table_len+"'>"+$selected+"" +
                     "<td></td>" +
                     "<td></td>" +
                     "<td></td>" +
@@ -90,15 +86,16 @@ function delete_concrete_row(counterOfTheRows)
     $('#responseMesssageDeleteOrder').empty();
 
     var order_val=document.getElementById("order_row_"+counterOfTheRows).innerHTML;
-    var meal_val=document.getElementById("meal_row_"+counterOfTheRows).innerHTML;
+    var table_val=document.getElementById("table_row_"+counterOfTheRows).innerHTML;
+    var meal_val=document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML;
 
-    var foddArrays = meal_val.split(",");
-    console.log(foddArrays);
-
+    var foodArrays = meal_val.split(",");
+    console.log(foodArrays);
 
     console.log("toto posielam" + "\n" +
         "ORDER:" + order_val + "\n" +
-        "MEAL:" + meal_val + "\n");
+        "TABLE_N:" + table_val + "\n" +
+        "MEAL:" + JSON.stringify(foodArrays) + "\n");
 
     $('#confirmDeleteModalYes').off().on('click',function(){
         $.ajax({
@@ -108,8 +105,9 @@ function delete_concrete_row(counterOfTheRows)
             },
             type: "DELETE",
             data: JSON.stringify(
-                {   "order_id":   order_val,
-                    "meals":      foddArrays,
+                {   "table_id":   table_val,
+                    "meals":      foodArrays,
+                    "order_id":   order_val
                 } ),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
@@ -137,14 +135,31 @@ function edit_concrete_row(counterOfTheRows)
     document.getElementById("save_button_index_"+counterOfTheRows).style.display="inline-block";
 
     var table=document.getElementById("table_row_"+counterOfTheRows);
-    var meal=document.getElementById("meal_row_"+counterOfTheRows);
+    var meal=document.getElementById("meal_row_input_"+counterOfTheRows);
+    var selectPickerRow=document.getElementById("selectPicker"+table_len);
 
     var table_data=table.innerHTML;
     var meal_data=meal.innerHTML;
 
+    table.innerHTML="<input class='form-control' type='text' id='table_text"+counterOfTheRows+"' value='"+table_data+"'>"
+    meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"'>";
 
-    table.innerHTML="<input class='form-control' type='text' id='table_text"+counterOfTheRows+"' value='"+table_data+"'>";
-    meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"' disabled>";
+    var foodArray = meal_data.split(",");
+
+    console.log("removing atrr hiideen on row -> " + counterOfTheRows);
+    // naplnenie jednotliveho selectpickeru...
+    for (var i = 0; i < foodArray.length; i++) {
+        console.log("Pridavam2 -> " + foodArray[i]);
+        newOption = document.createElement("option");
+        selectPickerRow.appendChild(newOption);
+        newOption.innerHTML = foodArray[i];
+        $('#selectPicker'+counterOfTheRows+'').selectpicker('refresh');
+
+    $('#selectPicker'+counterOfTheRows+'').selectpicker('show');
+
+}
+
+
 }
 
 function save_concrete_row(counterOfTheRows)
@@ -154,16 +169,17 @@ function save_concrete_row(counterOfTheRows)
     var meal_val=document.getElementById("meal_text"+counterOfTheRows).value;
 
     document.getElementById("table_row_"+counterOfTheRows).innerHTML=table_val;
-    document.getElementById("meal_row_"+counterOfTheRows).innerHTML=meal_val;
+    document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=meal_val;
 
+    $('#selectPicker'+counterOfTheRows+'').selectpicker('hide');
     document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
     document.getElementById("delete_button_index_"+counterOfTheRows).style.display="inline-block";
     document.getElementById("save_button_index_"+counterOfTheRows).style.display="none";
 }
 
 $( document ).ready(function()  {
-    $('.selectpicker').on('change', function(){
-        $selected = $('.selectpicker').val();
+    $('#selectPickerID').on('change', function(){
+        $selected = $('#selectPickerID').val();
         console.log($selected); // ziskanie vsetkych hodnot z select pickeru..
         console.log("This is out of ->" + $selected); // ziskanie vsetkych hodnot z select pickeru..
     });
@@ -192,7 +208,7 @@ $( document ).ready(function()  {
                 newOption = document.createElement("option");
                 selectpickerID.appendChild(newOption);
                 newOption.innerHTML = $foodArray[i];
-                $('.selectpicker').selectpicker('refresh');
+                $('#selectPickerID').selectpicker('refresh');
             }
         }
     });
@@ -210,13 +226,18 @@ $( document ).ready(function()  {
             console.log(response);
             console.log("GET method");
             for (var key in JsonObject) {
-                var table=document.getElementById("orderTable");
-                var table_len=(table.rows.length)-1;
-                table.insertRow(table_len).outerHTML=
-                    "<tr id='row"+table_len+"' class='text-center'>" +
-                    "<td id='order_row_"+table_len+"'>"+JsonObject[key].id+"</td>" +
-                    "<td id='table_row_"+table_len+"'>"+JsonObject[key].table_id+"</td>" +
-                    "<td id='meal_row_"+table_len+"'>"+JsonObject[key].meals+"</td>" +
+                var table = document.getElementById("orderTable");
+                var table_len = (table.rows.length) - 1;
+                table.insertRow(table_len).outerHTML =
+                    "<tr id='row" + table_len + "' class='text-center'>" +
+                    "<td id='order_row_" + table_len + "'>" + JsonObject[key].id + "</td>" +
+                    "<td id='table_row_" + table_len + "'>" + JsonObject[key].table_id + "</td>" +
+                    "<td id='meal_row_" + table_len + "'>" +
+                    "<div id='meal_row_input_" + table_len +"'>"+JsonObject[key].meals+"</div>" +
+                    " <select id='selectPicker"+table_len+"' class='selectpicker' multiple data-live-search='true'>" +
+                    "                            </select>" +
+                    "                            <div id='badSelectItems"+table_len+"'></div>" +
+                    "</td>" +
                     "<td id='price_row_"+table_len+"'>"+JsonObject[key].price+" EUR</td>" +
                     "<td id='ingredients_row_"+table_len+"'>"+JsonObject[key].date+"</td>" +
                     "<td id='ingredients_row_"+table_len+"'>"+JsonObject[key].served_by+"</td>" +
@@ -232,20 +253,21 @@ $( document ).ready(function()  {
                 document.getElementById("edit_button_index_"+table_len).style.display="inline-block";
                 document.getElementById("delete_button_index_"+table_len).style.display="inline-block";
                 document.getElementById("save_button_index_"+table_len).style.display="none";
-
+                // schovanie selectpickeru
+                $('#selectPicker'+table_len+'').selectpicker('hide');
             }
         },
     });
 });
 
 
-function controlOrderInputs(new_tableOrder, new_tableNumber , counterOfTheRows, $selectedLength){
+function controlOrderInputs(new_tableOrder , counterOfTheRows, $selectedLength){
     removeAlertTextForOrder(counterOfTheRows);
     removeAlertClassesForOrder(counterOfTheRows);
 
     console.log("Pocet riadkov -> " + counterOfTheRows );
     if(counterOfTheRows < 1){
-        if(!new_tableNumber.match($regexForInputOrderID)){
+        if(!new_tableOrder.match($regexForInputOrderID)){
             $('#badTableNumber').empty().append("Wrong table number (must be number)" + '<br>');
             $('#badTableNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
@@ -256,7 +278,7 @@ function controlOrderInputs(new_tableOrder, new_tableNumber , counterOfTheRows, 
         }
     }
     else{
-        if(!new_tableNumber.match($regexForInputOrderID)){
+        if(!new_tableOrder.match($regexForInputOrderID)){
             $('#table_row_' + counterOfTheRows+'').append("<div " + "id='badTableNumber"+counterOfTheRows+"'>Wrong table number (must be number)</div>");
             $('#badTableNumber' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
