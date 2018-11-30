@@ -8,6 +8,36 @@ $regexForInputEmail = "^.+\\@.+\\..+$";
 $regexForInputTelephone = "^[0-9]{3}[0-9]*$";
 $regexForTime = "^([1-9]|([012][0-9])|(3[01]))-([0]{0,1}[1-9]|1[012])-\\d\\d\\d\\d [012]{0,1}[0-9]:[0-9][0-9]$";
 
+// /**
+//  * Function which sets sidebar for roles...
+//  */
+// function decideWithRole() {
+//     // employee
+//     if (sessionStorage.getItem("privilegesOfUser") == 1){
+//         // TODO: este spravit GET food ale urobit ho ako /employee/food.html a bez upravovania iba zobrazit co je....
+//         $('.nav-sidebar').append(
+//             "<li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
+//             "<li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>");
+//     }
+//     // head
+//     else if(sessionStorage.getItem("privilegesOfUser") == 2){
+//         console.log("i am here in head privi");
+//         $('#siderbar').append(
+//             "<li class='active w-100 text-center'><a href='/~xorsak02/IIS/src/frontend/html/admin/bookings.html'>Bookings</a></li>" +
+//             "    <li class='active w-100 text-center'><a href='/~xorsak02/IIS/src/frontend/html/admin/orders.html'>Orders</a></li>" +
+//             "    <li class='active w-100 text-center'><a href='/~xorsak02/IIS/src/frontend/html/admin/food.html'>Food</a></li>" +
+//             "    <li class='active w-100 text-center'><a href='/~xorsak02/IIS/src/frontend/html/admin/ingredients.html'>Ingredients</a></li>");
+//         console.log("apeended");
+//     }
+//     // admin
+//     else{
+//
+//     }
+// }
+//
+// // call decide role
+// decideWithRole();
+
 /**
  * Function for editing concrete row of reservations
  */
