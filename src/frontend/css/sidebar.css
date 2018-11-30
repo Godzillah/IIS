@@ -10,6 +10,7 @@
     background-color: rgba(204, 165, 115, 0.64);
 }
 
+/* for concrete links */
 .nav-sidebar a {
     display: block;
     color: #141614;
@@ -17,11 +18,13 @@
     text-decoration: none;
 }
 
+/* if active */
 .nav-sidebar a.active {
     background-color: #4CAF50;
     color: white;
 }
 
+/* if detects mouse */
 .nav-sidebar a:hover:not(.active) {
     background-color: rgba(118, 79, 46, 0.56);
     color: white;

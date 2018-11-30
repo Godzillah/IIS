@@ -1,81 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Rezervations</title>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
+	<title>Rezervations</title>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
 </head>
 
 <style>
-    html,
-    body,
-    .carousel-inner > .item > img {
-        position: fixed;
-    }
+	html,
+	body,
+	.carousel-inner > .item > img {
+		position: fixed;
+	}
 
-    .carousel .item> img {
-        position: fixed;
-    }
+	.carousel .item > img {
+		position: fixed;
+	}
 
-    .firstCarousel{
-        font-size:3vw;
-        border-radius: 3vw;
-        background :#52322a;
-    }
+	.firstCarousel {
+		font-size: 3vw;
+		border-radius: 3vw;
+		background: #52322a;
+	}
 
-    .secondCarousel{
-        font-size:3vw;
-        border-radius: 3vw;
-        background: #daaa6c;
-    }
+	.secondCarousel {
+		font-size: 3vw;
+		border-radius: 3vw;
+		background: #daaa6c;
+	}
 
 </style>
 
 <body class="animated fadeIn mb-3">
-    <div id="customerCarousel" class="carousel slide carousel-fade" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#customerCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#customerCarousel" data-slide-to="1"></li>
-        </ol>
+<div id="customerCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+	<ol class="carousel-indicators">
+		<li data-target="#customerCarousel" data-slide-to="0" class="active"></li>
+		<li data-target="#customerCarousel" data-slide-to="1"></li>
+	</ol>
 
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active">
-                <img class="w-100 img-fluid" src="/~xorsak02/IIS/src/frontend/images/background4_1080.jpg" alt="First slide Responsive image">
-                    <div class="carousel-caption" style="margin-bottom:8vw">
-                        <p class="h1-responsive" style="font-size:10vw;" >No name</p>
-                        <a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html"><button  class="btn firstCarousel waves-effect">Rezervations</button></a>
-                        <br>
-                        <br>
-                        <a href="/~xorsak02/IIS/src/frontend/html/customer/customerMenu.html"><button style="font-size:2vw; border-radius: 2vw;" class="btn firstCarousel waves-effect ">see the menu</button></a>
-                        <br>
-                        <br>
-                        <a href="/~xorsak02/IIS/src/frontend/html/loginPage.html"><button style="font-size:2vw; border-radius: 2vw;" class="btn  firstCarousel waves-effect">login</button></a>
-                    </div>
-            </div>
-            <div class="carousel-item">
-                <img  class="w-100 img-fluid" src="/~xorsak02/IIS/src/frontend/images/background3_1080.jpg" alt="Second slide Responsive image">
-                <div class="carousel-caption" style="margin-bottom:8vw">
-                    <p class="h1-responsive" style="font-size:10vw;" >No name</p>
-                    <a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html"><button class="btn secondCarousel waves-effect" >Rezervations</button></a>
-                    <br>
-                    <br>
-                    <a href="/~xorsak02/IIS/src/frontend/html/customer/customerMenu.html"><button style="font-size:2vw; border-radius: 2vw;" class="btn secondCarousel waves-effect">see the menu</button></a>
-                    <br>
-                    <br>
-                    <a href="/~xorsak02/IIS/src/frontend/html/loginPage.html"><button style="font-size:2vw; border-radius: 2vw;" class="btn secondCarousel waves-effect">login</button></a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="carousel-inner" role="listbox">
+		<div class="carousel-item active">
+			<img class="w-100 img-fluid" src="/~xorsak02/IIS/src/frontend/images/background4_1080.jpg"
+			     alt="First slide Responsive image">
+			<div class="carousel-caption" style="margin-bottom:8vw">
+				<p class="h1-responsive" style="font-size:10vw;">No name</p>
+				<a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html">
+					<button class="btn firstCarousel waves-effect">Rezervations</button>
+				</a>
+				<br>
+				<br>
+				<a href="/~xorsak02/IIS/src/frontend/html/customer/customerMenu.html">
+					<button style="font-size:2vw; border-radius: 2vw;" class="btn firstCarousel waves-effect ">see the
+						menu
+					</button>
+				</a>
+				<br>
+				<br>
+				<a href="/~xorsak02/IIS/src/frontend/html/loginPage.html">
+					<button style="font-size:2vw; border-radius: 2vw;" class="btn  firstCarousel waves-effect">login
+					</button>
+				</a>
+			</div>
+		</div>
+		<div class="carousel-item">
+			<img class="w-100 img-fluid" src="/~xorsak02/IIS/src/frontend/images/background3_1080.jpg"
+			     alt="Second slide Responsive image">
+			<div class="carousel-caption" style="margin-bottom:8vw">
+				<p class="h1-responsive" style="font-size:10vw;">No name</p>
+				<a href="/~xorsak02/IIS/src/frontend/html/customer/customerBookingsMain.html">
+					<button class="btn secondCarousel waves-effect">Rezervations</button>
+				</a>
+				<br>
+				<br>
+				<a href="/~xorsak02/IIS/src/frontend/html/customer/customerMenu.html">
+					<button style="font-size:2vw; border-radius: 2vw;" class="btn secondCarousel waves-effect">see the
+						menu
+					</button>
+				</a>
+				<br>
+				<br>
+				<a href="/~xorsak02/IIS/src/frontend/html/loginPage.html">
+					<button style="font-size:2vw; border-radius: 2vw;" class="btn secondCarousel waves-effect">login
+					</button>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <!--FOR FASTER LOADING SCRIPTS AT THE END -->
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/mdb.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<!--FOR FASTER LOADING SCRIPTS AT THE END -->
+<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
+<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/mdb.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </body>
 </html>

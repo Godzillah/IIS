@@ -1,4 +1,4 @@
-$( document ).ready(function()  {
+$(document).ready(function () {
     console.log("Ahoj customerDrinks.js");
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
@@ -12,11 +12,11 @@ $( document ).ready(function()  {
             for (var key in JsonObject) {
                 console.log(JsonObject[key].type);
                 // ak je jedno meal tak budeme appendovat
-                if(JsonObject[key].type === "drink"){
+                if (JsonObject[key].type === "drink") {
                     $(".drinkItems").append("<div class=\"drinkItem\">\n" +
                         "                    <div class=\"drinkNamePriceDescription\">\n" +
-                        "                        <p class=\"drinkNamePrice\"><b>"+JsonObject[key].description+"</b>....................................................."+JsonObject[key].price+" EUR</p>\n" +
-                        "                        <p class=\"drinkDescription\">("+JsonObject[key].ingredients+")</p>\n" +
+                        "                        <p class=\"drinkNamePrice\"><b>" + JsonObject[key].description + "</b>....................................................." + JsonObject[key].price + " EUR</p>\n" +
+                        "                        <p class=\"drinkDescription\">(" + JsonObject[key].ingredients + ")</p>\n" +
                         "                    </div>\n" +
                         "                </div>" +
                         "                <br>");

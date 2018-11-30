@@ -9,14 +9,14 @@ $(function () {
     });
 });
 // on mouse move reseting timer
-$(function(){
-    $("body").mousemove(function(){
+$(function () {
+    $("body").mousemove(function () {
         sessionSeconds = 0;
     });
 });
 
 // redirect and alert..
-function redirectAndAlert(){
+function redirectAndAlert() {
     location.href = "/~xorsak02/IIS/src/frontend/html/loginPage.html";
     alert("For inactive 10 minutes you were redirected to loginPage");
 }

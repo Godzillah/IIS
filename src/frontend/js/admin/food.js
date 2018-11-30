@@ -16,34 +16,33 @@ $regexForInputDescription = "^.{3}.*$";
 $regexForInputPrice = "^[0-9]+.[0-9]{2}$";
 $regexForInputIngredients = "^.{3}.*$";
 
-function edit_concrete_row(counterOfTheRows)
-{
+function edit_concrete_row(counterOfTheRows) {
     console.log("edit here");
-    document.getElementById("edit_button_index_"+counterOfTheRows).style.display="none";
-    document.getElementById("delete_button_index_"+counterOfTheRows).style.display="none";
-    document.getElementById("save_button_index_"+counterOfTheRows).style.display="inline-block";
+    document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "none";
+    document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "none";
+    document.getElementById("save_button_index_" + counterOfTheRows).style.display = "inline-block";
     // ukazeme selectpicker
-    $('#selectPickerID'+counterOfTheRows+'').selectpicker('show');
-    $('#selectPickerIDType'+counterOfTheRows+'').selectpicker('show');
+    $('#selectPickerID' + counterOfTheRows + '').selectpicker('show');
+    $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('show');
 
-    var meal=document.getElementById("meal_row_input_"+counterOfTheRows);
-    var description=document.getElementById("description_row_"+counterOfTheRows);
-    var price=document.getElementById("price_row_"+counterOfTheRows);
-    var ingredients=document.getElementById("ingredients_row_input_"+counterOfTheRows);
-    var selectPickerRow=document.getElementById("selectPickerID"+counterOfTheRows);
-    var selectPickerFoodRow=document.getElementById("selectPickerIDType"+counterOfTheRows);
+    var meal = document.getElementById("meal_row_input_" + counterOfTheRows);
+    var description = document.getElementById("description_row_" + counterOfTheRows);
+    var price = document.getElementById("price_row_" + counterOfTheRows);
+    var ingredients = document.getElementById("ingredients_row_input_" + counterOfTheRows);
+    var selectPickerRow = document.getElementById("selectPickerID" + counterOfTheRows);
+    var selectPickerFoodRow = document.getElementById("selectPickerIDType" + counterOfTheRows);
 
-    var meal_data=meal.innerHTML;
-    var description_data=description.innerHTML;
-    var price_data=price.innerHTML;
-    var ingredients_data=ingredients.innerHTML;
+    var meal_data = meal.innerHTML;
+    var description_data = description.innerHTML;
+    var price_data = price.innerHTML;
+    var ingredients_data = ingredients.innerHTML;
 
     var price_data = price_data.replace(" EUR", "");
 
-    meal.innerHTML="<input class='form-control' type='text' id='meal_text"+counterOfTheRows+"' value='"+meal_data+"' hidden>";
-    price.innerHTML="<input class='form-control' type='text' id='price_text"+counterOfTheRows+"' value='"+price_data+"'>";
-    description.innerHTML="<input class='form-control' type='text' id='description_text"+counterOfTheRows+"' value='"+description_data+"' disabled>";
-    ingredients.innerHTML="<input class='form-control' type='text' id='ingredients_text"+counterOfTheRows+"' value='"+ingredients_data+"' hidden>";
+    meal.innerHTML = "<input class='form-control' type='text' id='meal_text" + counterOfTheRows + "' value='" + meal_data + "' hidden>";
+    price.innerHTML = "<input class='form-control' type='text' id='price_text" + counterOfTheRows + "' value='" + price_data + "'>";
+    description.innerHTML = "<input class='form-control' type='text' id='description_text" + counterOfTheRows + "' value='" + description_data + "' disabled>";
+    ingredients.innerHTML = "<input class='form-control' type='text' id='ingredients_text" + counterOfTheRows + "' value='" + ingredients_data + "' hidden>";
 
     $selectedIngredietsArray = ingredients_data.split(",");
     $foodTypeSelectedArray = meal_data;
@@ -67,14 +66,14 @@ function edit_concrete_row(counterOfTheRows)
     }
 
     // ziskanie ze sa zmeni selectnutych ingredientcii
-    $('#selectPickerID' + counterOfTheRows + '').off().on('change', function(){
+    $('#selectPickerID' + counterOfTheRows + '').off().on('change', function () {
         $selectedIngredietsArray = $('#selectPickerID' + counterOfTheRows + '').val();
         console.log("Toto je selectpickerIngredicii ->" + $selectedIngredietsArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerID' + counterOfTheRows + '').selectpicker('refresh');
 
     });
     // ziskanie ze sa zmeni selectnutych jedla....
-    $('#selectPickerIDType' + counterOfTheRows + '').off().on('change', function(){
+    $('#selectPickerIDType' + counterOfTheRows + '').off().on('change', function () {
         $foodTypeSelectedArray = $('#selectPickerIDType' + counterOfTheRows + '').val();
         console.log("Toto je selectPickerTypJedla ->" + $foodTypeSelectedArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('refresh');
@@ -111,59 +110,58 @@ function save_concrete_row(counterOfTheRows) {
         controlFoodInputs($foodTypeSelectedArray, description_val, price_val, counterOfTheRows, $selectedIngredietsArray);
     }
     else {
-            console.log($selectedIngredietsArray);
-            $.ajax({
-                url: "https://restaurant.memonil.com/meal",
-                headers: {
-                    "Authorization": sessionStorage.getItem("jwtToken")
-                },
-                type: "PUT",
-                data: JSON.stringify(
-                    {
-                        "type": $foodTypeSelectedArray,
-                        "description": description_val,
-                        "price": price_val,
-                        "ingredients": $selectedIngredietsArray,
-                    }),
-                contentType: 'application/json;charset=UTF-8',
-                success: function (response) {
-                    // handle the response
-                    console.log(response);
-                    console.log("PUT method");
-                    removeAlertTextForFood(counterOfTheRows);
-                    removeAlertClassesForFood(counterOfTheRows);
-                },
-            });
-        document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML=$foodTypeSelectedArray;
-        document.getElementById("description_row_"+counterOfTheRows).innerHTML=description_val;
-        document.getElementById("price_row_"+counterOfTheRows).innerHTML=price_val + " EUR";
-        document.getElementById("ingredients_row_input_"+counterOfTheRows).innerHTML=ingredients_val;
+        console.log($selectedIngredietsArray);
+        $.ajax({
+            url: "https://restaurant.memonil.com/meal",
+            headers: {
+                "Authorization": sessionStorage.getItem("jwtToken")
+            },
+            type: "PUT",
+            data: JSON.stringify(
+                {
+                    "type": $foodTypeSelectedArray,
+                    "description": description_val,
+                    "price": price_val,
+                    "ingredients": $selectedIngredietsArray,
+                }),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (response) {
+                // handle the response
+                console.log(response);
+                console.log("PUT method");
+                removeAlertTextForFood(counterOfTheRows);
+                removeAlertClassesForFood(counterOfTheRows);
+            },
+        });
+        document.getElementById("meal_row_input_" + counterOfTheRows).innerHTML = $foodTypeSelectedArray;
+        document.getElementById("description_row_" + counterOfTheRows).innerHTML = description_val;
+        document.getElementById("price_row_" + counterOfTheRows).innerHTML = price_val + " EUR";
+        document.getElementById("ingredients_row_input_" + counterOfTheRows).innerHTML = ingredients_val;
         // skryt selectpicker
-        $('#selectPickerID'+counterOfTheRows+'').selectpicker('hide');
-        $('#selectPickerIDType'+counterOfTheRows+'').selectpicker('hide');
+        $('#selectPickerID' + counterOfTheRows + '').selectpicker('hide');
+        $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('hide');
 
-        document.getElementById("edit_button_index_"+counterOfTheRows).style.display="inline-block";
-        document.getElementById("delete_button_index_"+counterOfTheRows).style.display="inline-block";
-        document.getElementById("save_button_index_"+counterOfTheRows).style.display="none";
+        document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "inline-block";
+        document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "inline-block";
+        document.getElementById("save_button_index_" + counterOfTheRows).style.display = "none";
         // pozastavanie fce inak by doslo k situacii ze by sa prv reloadla a nezachovalavi by sa zmeny
-        setTimeout(function(){
+        setTimeout(function () {
             location.reload(true);
         }, 100);
-        }
+    }
 }
 
-function add_concrete_row()
-{
+function add_concrete_row() {
     console.log("add here");
-    var new_type=document.getElementById("new_type").value;
-    var new_description=document.getElementById("new_description").value;
-    var new_price=document.getElementById("new_price").value;
-    var new_ingredients=document.getElementById("new_ingredients").value;
+    var new_type = document.getElementById("new_type").value;
+    var new_description = document.getElementById("new_description").value;
+    var new_price = document.getElementById("new_price").value;
+    var new_ingredients = document.getElementById("new_ingredients").value;
 
     // kontrola existujuceho description
-    for(var i = 0; i < $descriptionsArray.length; i++){
-        console.log("array -> " +  $descriptionsArray[i]);
-        if($descriptionsArray[i] === new_description){
+    for (var i = 0; i < $descriptionsArray.length; i++) {
+        console.log("array -> " + $descriptionsArray[i]);
+        if ($descriptionsArray[i] === new_description) {
             $('#badDescription').empty().append("Wrong description (already exists)" + '<br>');
             $('#badDescription').addClass("alert alert-danger text-danger font-weight-bold text-center");
             return;
@@ -171,17 +169,17 @@ function add_concrete_row()
     }
 
     // sem bude kontrola
-    if($foodTypeSelectedArray == ""
+    if ($foodTypeSelectedArray == ""
         || $foodTypeSelectedArray == null
         || !new_description.match($regexForInputDescription)
         || !new_price.match($regexForInputPrice)
         || $selectedIngredietsArray == null
-        || $selectedIngredietsArray == ""){
+        || $selectedIngredietsArray == "") {
 
-        if($foodTypeSelectedArray == ""){
+        if ($foodTypeSelectedArray == "") {
             console.log("array ma '' ");
         }
-        if($selectedIngredietsArray == ""){
+        if ($selectedIngredietsArray == "") {
             console.log("food array je prazdny");
         }
 
@@ -189,49 +187,50 @@ function add_concrete_row()
         console.log("This is food selected array -> " + $foodTypeSelectedArray);
         controlFoodInputs($foodTypeSelectedArray, new_description, new_price, 0, $selectedIngredietsArray);
     }
-    else{
+    else {
         $.ajax({
             url: "https://restaurant.memonil.com/meal",
-            headers:{
+            headers: {
                 "Authorization": sessionStorage.getItem("jwtToken")
             },
             type: "POST",
             data: JSON.stringify(
-                {   "type":   $foodTypeSelectedArray,
-                    "description":   new_description,
-                    "price":      new_price,
+                {
+                    "type": $foodTypeSelectedArray,
+                    "description": new_description,
+                    "price": new_price,
                     "ingredients": $selectedIngredietsArray,
-                } ),
+                }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
                 // handle the response
                 console.log(response);
 
-                var table=document.getElementById("foodTable");
-                var table_len=(table.rows.length)-1;
-                table.insertRow(table_len).outerHTML=
-                    "<tr id='row"+table_len+"' class='text-center'>" +
-                    "<td id='meal_row_"+table_len+"'>" +
-                        "<div class=\"row justify-content-center\">" +
-                            "<div id='meal_row_input_"+table_len+"'>"+$foodTypeSelectedArray+"</div>" +
-                            "<select id='selectPickerIDType"+table_len+"' class='selectpicker' data-live-search='true'></select>" +
-                        "</div>" +
-                        "<div id='badSelectType"+table_len+"'></div>" +
+                var table = document.getElementById("foodTable");
+                var table_len = (table.rows.length) - 1;
+                table.insertRow(table_len).outerHTML =
+                    "<tr id='row" + table_len + "' class='text-center'>" +
+                    "<td id='meal_row_" + table_len + "'>" +
+                    "<div class=\"row justify-content-center\">" +
+                    "<div id='meal_row_input_" + table_len + "'>" + $foodTypeSelectedArray + "</div>" +
+                    "<select id='selectPickerIDType" + table_len + "' class='selectpicker' data-live-search='true'></select>" +
+                    "</div>" +
+                    "<div id='badSelectType" + table_len + "'></div>" +
                     "</td>" +
-                    "<td id='description_row_"+table_len+"'>"+new_description+"</td>" +
-                    "<td id='price_row_"+table_len+"'>"+new_price+" EUR</td>" +
-                    "<td id='ingredients_row_"+table_len+"'>" +
-                        "<div class=\"row justify-content-center\">" +
-                            "<div id='ingredients_row_input_" + table_len +"'>"+$selectedIngredietsArray+"</div>" +
-                            "<select id='selectPickerID"+table_len+"' class='selectpicker' multiple data-live-search='true'></select>" +
-                        "</div>" +
-                        "<div id='badSelect"+table_len+"'></div>" +
+                    "<td id='description_row_" + table_len + "'>" + new_description + "</td>" +
+                    "<td id='price_row_" + table_len + "'>" + new_price + " EUR</td>" +
+                    "<td id='ingredients_row_" + table_len + "'>" +
+                    "<div class=\"row justify-content-center\">" +
+                    "<div id='ingredients_row_input_" + table_len + "'>" + $selectedIngredietsArray + "</div>" +
+                    "<select id='selectPickerID" + table_len + "' class='selectpicker' multiple data-live-search='true'></select>" +
+                    "</div>" +
+                    "<div id='badSelect" + table_len + "'></div>" +
                     "</td>" +
                     "<td>" +
                     "<div id=first class='row justify-content-center'>" +
-                    "<input type='button' id='save_button_index_"+table_len+"' value='Save' class='save btn btn-green' onclick='save_concrete_row("+table_len+")'>" +
-                    "<i id='edit_button_index_"+table_len+"' style='font-size: 40px;color:teal;' class='fa fa-edit edit' aria-hidden='true' onclick='edit_concrete_row("+table_len+")'></i>" +
-                    "<i id='delete_button_index_"+table_len+"' class='fa fa-times delete' data-toggle='modal' data-target='#confirmDeleteModal' style='font-size: 40px;color:darkred;' aria-hidden='true' onclick='delete_concrete_row("+table_len+")'></i>" +
+                    "<input type='button' id='save_button_index_" + table_len + "' value='Save' class='save btn btn-green' onclick='save_concrete_row(" + table_len + ")'>" +
+                    "<i id='edit_button_index_" + table_len + "' style='font-size: 40px;color:teal;' class='fa fa-edit edit' aria-hidden='true' onclick='edit_concrete_row(" + table_len + ")'></i>" +
+                    "<i id='delete_button_index_" + table_len + "' class='fa fa-times delete' data-toggle='modal' data-target='#confirmDeleteModal' style='font-size: 40px;color:darkred;' aria-hidden='true' onclick='delete_concrete_row(" + table_len + ")'></i>" +
                     "</div>" +
                     "</td>" +
                     "</tr>";
@@ -242,35 +241,34 @@ function add_concrete_row()
                 removeAlertClassesForFood(table_len);
 
                 // reset values of selectpicker
-                $('#selectPickerID option').attr("selected",false);
+                $('#selectPickerID option').attr("selected", false);
                 $('#selectPickerID option').selectpicker('refresh');
-                $('#selectPickerIDType option').attr("selected",false);
+                $('#selectPickerIDType option').attr("selected", false);
                 $('#selectPickerIDType option').selectpicker('refresh');
 
-                document.getElementById("new_type").value="";
-                document.getElementById("new_description").value="";
-                document.getElementById("new_price").value="";
-                document.getElementById("new_ingredients").value="";
+                document.getElementById("new_type").value = "";
+                document.getElementById("new_description").value = "";
+                document.getElementById("new_price").value = "";
+                document.getElementById("new_ingredients").value = "";
 
-                document.getElementById("edit_button_index_"+table_len).style.display="inline-block";
-                document.getElementById("save_button_index_"+table_len).style.display="none";
+                document.getElementById("edit_button_index_" + table_len).style.display = "inline-block";
+                document.getElementById("save_button_index_" + table_len).style.display = "none";
             },
         });
     }
 }
 
-function delete_concrete_row(counterOfTheRows)
-{
+function delete_concrete_row(counterOfTheRows) {
     console.log("delete here");
 
     // vycistenie
     $('#responseMesssageDeleteFood').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#responseMesssageDeleteFood').empty();
 
-    var meal_val=document.getElementById("meal_row_input_"+counterOfTheRows).innerHTML;
-    var description_val=document.getElementById("description_row_"+counterOfTheRows).innerHTML;
-    var price_val=document.getElementById("price_row_"+counterOfTheRows).innerHTML;
-    var ingredients_val=document.getElementById("ingredients_row_input_"+counterOfTheRows).innerHTML;
+    var meal_val = document.getElementById("meal_row_input_" + counterOfTheRows).innerHTML;
+    var description_val = document.getElementById("description_row_" + counterOfTheRows).innerHTML;
+    var price_val = document.getElementById("price_row_" + counterOfTheRows).innerHTML;
+    var ingredients_val = document.getElementById("ingredients_row_input_" + counterOfTheRows).innerHTML;
 
     var ingredientsArrayn = ingredients_val.split(",");
 
@@ -285,19 +283,20 @@ function delete_concrete_row(counterOfTheRows)
         "P:" + price_val + "\n" +
         "I:" + JSON.stringify(ingredientsArrayn) + "\n");
 
-    $('#confirmDeleteModalYes').off().on('click',function(){
+    $('#confirmDeleteModalYes').off().on('click', function () {
         $.ajax({
             url: "https://restaurant.memonil.com/meal",
-            headers:{
+            headers: {
                 "Authorization": sessionStorage.getItem("jwtToken")
             },
             type: "DELETE",
             data: JSON.stringify(
-                {   "type":   meal_val,
-                    "description":      description_val,
-                    "price":      price_val,
-                    "ingredients":      ingredientsArrayn,
-                } ),
+                {
+                    "type": meal_val,
+                    "description": description_val,
+                    "price": price_val,
+                    "ingredients": ingredientsArrayn,
+                }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
                 // handle the response
@@ -307,8 +306,8 @@ function delete_concrete_row(counterOfTheRows)
                 $('#responseMesssageDeleteFood').addClass("alert alert-success text-success font-weight-bold text-center");
                 $('#responseMesssageDeleteFood').empty().append("Success");
                 console.log("delete row");
-                document.getElementById("row"+counterOfTheRows+"").outerHTML="";
-                $('#confirmDeleteModal').data('hideInterval', setTimeout(function(){
+                document.getElementById("row" + counterOfTheRows + "").outerHTML = "";
+                $('#confirmDeleteModal').data('hideInterval', setTimeout(function () {
                     $('#confirmDeleteModal').modal('hide');
                 }, 1000));
             },
@@ -316,14 +315,14 @@ function delete_concrete_row(counterOfTheRows)
     });
 }
 
-$( document ).ready(function()  {
-    $('#selectPickerID').on('change', function(){
+$(document).ready(function () {
+    $('#selectPickerID').on('change', function () {
         $selectedIngredietsArray = $('#selectPickerID').val();
         console.log($selectedIngredietsArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerID').selectpicker('refresh');
     });
 
-    $('#selectPickerIDType').on('change', function(){
+    $('#selectPickerIDType').on('change', function () {
         $foodTypeSelectedArray = $('#selectPickerIDType').val();
         console.log($foodTypeSelectedArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerIDType').selectpicker('refresh');
@@ -368,7 +367,7 @@ $( document ).ready(function()  {
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
         type: "GET",
-        headers:{
+        headers: {
             "Authorization": sessionStorage.getItem("jwtToken")
         },
         contentType: 'application/json;charset=UTF-8',
@@ -378,44 +377,44 @@ $( document ).ready(function()  {
             console.log(response);
             console.log("GET method");
             // timeout for selecpicker... 0.05s
-            setTimeout(function(){
+            setTimeout(function () {
                 for (var key in JsonObject) {
-                    var table=document.getElementById("foodTable");
-                    var table_len=(table.rows.length)-1;
-                    table.insertRow(table_len).outerHTML=
-                        "<tr id='row"+table_len+"' class='text-center'>" +
-                        "<td id='meal_row_"+table_len+"'>" +
+                    var table = document.getElementById("foodTable");
+                    var table_len = (table.rows.length) - 1;
+                    table.insertRow(table_len).outerHTML =
+                        "<tr id='row" + table_len + "' class='text-center'>" +
+                        "<td id='meal_row_" + table_len + "'>" +
                         "<div class='row justify-content-center'>" +
-                        "<div id='meal_row_input_"+table_len+"'>"+JsonObject[key].type+"</div>" +
-                        "<select id='selectPickerIDType"+table_len+"' class='selectpicker' data-live-search='true'></select>" +
+                        "<div id='meal_row_input_" + table_len + "'>" + JsonObject[key].type + "</div>" +
+                        "<select id='selectPickerIDType" + table_len + "' class='selectpicker' data-live-search='true'></select>" +
                         "</div>" +
-                        "<div id='badSelectType"+table_len+"'></div>" +
+                        "<div id='badSelectType" + table_len + "'></div>" +
                         "</td>" +
-                        "<td id='description_row_"+table_len+"'>"+JsonObject[key].description+"</td>" +
-                        "<td id='price_row_"+table_len+"'>"+JsonObject[key].price+" EUR</td>" +
-                        "<td id='ingredients_row_"+table_len+"'>" +
+                        "<td id='description_row_" + table_len + "'>" + JsonObject[key].description + "</td>" +
+                        "<td id='price_row_" + table_len + "'>" + JsonObject[key].price + " EUR</td>" +
+                        "<td id='ingredients_row_" + table_len + "'>" +
                         "<div class='row justify-content-center'>" +
-                        "<div id='ingredients_row_input_" + table_len +"'>"+JsonObject[key].ingredients+"</div>" +
-                        "<select id='selectPickerID"+table_len+"' class='selectpicker' multiple data-live-search='true'></select>" +
+                        "<div id='ingredients_row_input_" + table_len + "'>" + JsonObject[key].ingredients + "</div>" +
+                        "<select id='selectPickerID" + table_len + "' class='selectpicker' multiple data-live-search='true'></select>" +
                         "</div>" +
-                        "<div id='badSelect"+table_len+"'></div>" +
+                        "<div id='badSelect" + table_len + "'></div>" +
                         "</td>" +
                         "<td>" +
                         "<div id=first class='row justify-content-center'>" +
-                        "<input type='button' id='save_button_index_"+table_len+"' value='Save' class='save btn btn-green' onclick='save_concrete_row("+table_len+")'>" +
-                        "<i id='edit_button_index_"+table_len+"' style='font-size: 40px;color:teal;' class='fa fa-edit edit' aria-hidden='true' onclick='edit_concrete_row("+table_len+")'></i>" +
-                        "<i id='delete_button_index_"+table_len+"' class='fa fa-times delete' data-toggle='modal' data-target='#confirmDeleteModal' style='font-size: 40px;color:darkred;' aria-hidden='true' onclick='delete_concrete_row("+table_len+")'></i>" +
+                        "<input type='button' id='save_button_index_" + table_len + "' value='Save' class='save btn btn-green' onclick='save_concrete_row(" + table_len + ")'>" +
+                        "<i id='edit_button_index_" + table_len + "' style='font-size: 40px;color:teal;' class='fa fa-edit edit' aria-hidden='true' onclick='edit_concrete_row(" + table_len + ")'></i>" +
+                        "<i id='delete_button_index_" + table_len + "' class='fa fa-times delete' data-toggle='modal' data-target='#confirmDeleteModal' style='font-size: 40px;color:darkred;' aria-hidden='true' onclick='delete_concrete_row(" + table_len + ")'></i>" +
                         "</div>" +
                         "</td>" +
                         "</tr>";
-                    document.getElementById("delete_button_index_"+table_len).style.display="inline-block";
-                    document.getElementById("save_button_index_"+table_len).style.display="none";
+                    document.getElementById("delete_button_index_" + table_len).style.display = "inline-block";
+                    document.getElementById("save_button_index_" + table_len).style.display = "none";
 
                     // ulozim si taktiez vsetky username do sessionStorage...
                     $descriptionsArray.push(JsonObject[key].description);
                     // schovanie selectpickeru
-                    $('selectPickerID'+table_len+'').selectpicker('hide');
-                    $('#selectPickerIDType'+table_len+'').selectpicker('hide');
+                    $('selectPickerID' + table_len + '').selectpicker('hide');
+                    $('#selectPickerIDType' + table_len + '').selectpicker('hide');
                 }
             }, 50);
         },
@@ -423,79 +422,79 @@ $( document ).ready(function()  {
 });
 
 
-function controlFoodInputs($foodTypeSelectedArray, new_description, new_price, counterOfTheRows, $selectedLength){
+function controlFoodInputs($foodTypeSelectedArray, new_description, new_price, counterOfTheRows, $selectedLength) {
     removeAlertTextForFood(counterOfTheRows);
     removeAlertClassesForFood(counterOfTheRows);
 
-    console.log("Pocet riadkov -> " + counterOfTheRows );
-    if(counterOfTheRows < 1){
-        if($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null){
+    console.log("Pocet riadkov -> " + counterOfTheRows);
+    if (counterOfTheRows < 1) {
+        if ($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null) {
             console.log("prazdny znak");
             $('#badSelectType').empty().append("Wrong select (you must select 1 option)" + '<br>');
             $('#badSelectType').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if(!new_description.match($regexForInputDescription)){
+        if (!new_description.match($regexForInputDescription)) {
             $('#badDescription').empty().append("Wrong description (at least 3 chars long)" + '<br>');
             $('#badDescription').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if(!new_price.match($regexForInputPrice)){
+        if (!new_price.match($regexForInputPrice)) {
             $('#badPrice').empty().append("Wrong format (example: 0.00)" + '<br>');
             $('#badPrice').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if($selectedLength == "" || $selectedLength == null){
+        if ($selectedLength == "" || $selectedLength == null) {
             $('#badSelect').empty().append("Wrong select (at least 1 select)" + '<br>');
             $('#badSelect').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
     }
-    else{
-        console.log("This is pole ingredincii ->"  + $selectedLength);
-        console.log("This is pole jedla ->"  + $foodTypeSelectedArray);
+    else {
+        console.log("This is pole ingredincii ->" + $selectedLength);
+        console.log("This is pole jedla ->" + $foodTypeSelectedArray);
 
-        if($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null){
-            $('#meal_row_' + counterOfTheRows+'').append("<div " + "id='badSelectType"+counterOfTheRows+"'>Wrong select (you must select 1 option)</div>");
-            $('#badSelectType' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center")
+        if ($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null) {
+            $('#meal_row_' + counterOfTheRows + '').append("<div " + "id='badSelectType" + counterOfTheRows + "'>Wrong select (you must select 1 option)</div>");
+            $('#badSelectType' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center")
         }
-        if(!new_description.match($regexForInputDescription)){
-            $('#description_row_' + counterOfTheRows+'').append("<div " + "id='badDescription"+counterOfTheRows+"'>Wrong description (at least 3 chars long)</div>");
-            $('#badDescription' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
+        if (!new_description.match($regexForInputDescription)) {
+            $('#description_row_' + counterOfTheRows + '').append("<div " + "id='badDescription" + counterOfTheRows + "'>Wrong description (at least 3 chars long)</div>");
+            $('#badDescription' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if(!new_price.match($regexForInputPrice)){
-            $('#price_row_' + counterOfTheRows+'').append("<div " + "id='badPrice"+counterOfTheRows+"'>Wrong format (example: 0.00)</div>");
-            $('#badPrice' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
+        if (!new_price.match($regexForInputPrice)) {
+            $('#price_row_' + counterOfTheRows + '').append("<div " + "id='badPrice" + counterOfTheRows + "'>Wrong format (example: 0.00)</div>");
+            $('#badPrice' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if($selectedLength == null || $selectedLength == ""){
-            $('#ingredients_row_' + counterOfTheRows+'').append("<div " + "id='badSelect"+counterOfTheRows+"'>Wrong select (at least 1 select)</div>");
-            $('#badSelect' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
+        if ($selectedLength == null || $selectedLength == "") {
+            $('#ingredients_row_' + counterOfTheRows + '').append("<div " + "id='badSelect" + counterOfTheRows + "'>Wrong select (at least 1 select)</div>");
+            $('#badSelect' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
     }
 }
 
-function removeAlertTextForFood(counterOfTheRows){
+function removeAlertTextForFood(counterOfTheRows) {
     // removing text
     // for first only
     $('#badSelectType').empty();
     $('#badDescription').empty();
     $('#badPrice').empty();
     $('#badSelect').empty();
-    if(counterOfTheRows > 0){
-        $('#badSelectType' + counterOfTheRows+'').remove();
-        $('#badDescription' + counterOfTheRows+'').remove();
-        $('#badPrice' + counterOfTheRows+'').remove();
-        $('#badSelect' + counterOfTheRows+'').remove();
+    if (counterOfTheRows > 0) {
+        $('#badSelectType' + counterOfTheRows + '').remove();
+        $('#badDescription' + counterOfTheRows + '').remove();
+        $('#badPrice' + counterOfTheRows + '').remove();
+        $('#badSelect' + counterOfTheRows + '').remove();
     }
 }
 
-function removeAlertClassesForFood(counterOfTheRows){
+function removeAlertClassesForFood(counterOfTheRows) {
     // removing alert classes
     $('#badSelectType').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badDescription').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badPrice').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badSelect').removeClass("alert alert-success text-success font-weight-bold text-center");
-    if(counterOfTheRows > 0){
-        $('#badSelectType' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
-        $('#badDescription' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
-        $('#badPrice' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
-        $('#badSelect' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
+    if (counterOfTheRows > 0) {
+        $('#badSelectType' + counterOfTheRows + '').removeClass("alert alert-success text-success font-weight-bold text-center");
+        $('#badDescription' + counterOfTheRows + '').removeClass("alert alert-success text-success font-weight-bold text-center");
+        $('#badPrice' + counterOfTheRows + '').removeClass("alert alert-success text-success font-weight-bold text-center");
+        $('#badSelect' + counterOfTheRows + '').removeClass("alert alert-success text-success font-weight-bold text-center");
     }
 }
 
