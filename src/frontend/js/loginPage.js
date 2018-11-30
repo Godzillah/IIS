@@ -29,12 +29,6 @@ $(document).ready(function (){
                         return;
                     }
 
-                    if(JsonObject.payload.privileges == 1){
-                        console.log("SOM IBA zamestanec");
-                        location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
-                        return;
-                    }
-
                     console.log("Ukladam jwtToken do sessionStorage");
                     sessionStorage.setItem("jwtToken", JsonObject.payload.jwt);
                     sessionStorage.setItem("privilegesOfUser", JsonObject.payload.privileges);
