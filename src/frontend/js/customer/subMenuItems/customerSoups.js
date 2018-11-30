@@ -12,7 +12,7 @@ $( document ).ready(function()  {
             for (var key in JsonObject) {
                 console.log(JsonObject[key].type);
                 // ak je jedno meal tak budeme appendovat
-                if(JsonObject[key].type === "soups"){
+                if(JsonObject[key].type === "soup"){
                     $(".soupItems").append("<div class=\"soupItem\">\n" +
                         "                    <div class=\"soupNamePriceDescription\">\n" +
                         "                        <p class=\"soupNamePrice\"><b>"+JsonObject[key].description+"</b>....................................................."+JsonObject[key].price+" EUR</p>\n" +

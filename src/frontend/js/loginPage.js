@@ -23,17 +23,20 @@ $(document).ready(function (){
                 success: function (response) {
                     console.log(response);
                     var JsonObject= JSON.parse(response);
-                    //TODO: if(usernameFromInput === 'test' && passwordFromInput === 'test') { location.href = /IIS/src/frontend/html/admin/adminHomePage.html
-                    //TODO: else {   location.href = /IIS/src/frontend/html/admin/employeeHomePage.html }
                     // prejde do adminHomePage.html...
                     if(JsonObject.success == false){
                         wrongRegistrationsInputs();
                         return;
                     }
+
                     console.log("Ukladam jwtToken do sessionStorage");
                     sessionStorage.setItem("jwtToken", JsonObject.payload.jwt);
+                    sessionStorage.setItem("privilegesOfUser", JsonObject.payload.privileges);
                     console.log("this is -> "  + sessionStorage.getItem("jwtToken"));
-                    location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
+                    // wait 0.1s because of sessionStorage...
+                    setTimeout(function () {
+                        location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
+                    }, 100);
                 },
             });
         }

@@ -7,6 +7,7 @@ $regexForInputEmail = "^.+\\@.+\\..+$";
 $regexForInputIdOfEmployee = "^[0-9]{1}[0-9]*$";
 $regexForInputTelephone = "^[0-9]{3}[0-9]*$";
 $regexForInputAddress = "^.{3}.*$";
+$regexForInputPrivileges = "^\\s*[1|2|3]\\s*$"
 
 // globalny array vsetkych usernames (unique ID)
 var $usernames = [];
@@ -20,6 +21,7 @@ function edit_concrete_row(counterOfTheRows)
 
     var username=document.getElementById("username_row_"+counterOfTheRows);
     var password=document.getElementById("password_row_"+counterOfTheRows);
+    var privileges=document.getElementById("privileges_row_"+counterOfTheRows);
     var name=document.getElementById("name_row_"+counterOfTheRows);
     var surname=document.getElementById("surname_row_"+counterOfTheRows);
     var gender=document.getElementById("gender_row_"+counterOfTheRows);
@@ -29,6 +31,7 @@ function edit_concrete_row(counterOfTheRows)
 
     var username_data=username.innerHTML;
     var password_data=password.innerHTML;
+    var privileges_data=privileges.innerHTML;
     var name_data=name.innerHTML;
     var surname_data=surname.innerHTML;
     var gender_data=gender.innerHTML;
@@ -38,6 +41,7 @@ function edit_concrete_row(counterOfTheRows)
 
     username.innerHTML="<input type='text'  class='form-control' id='username_text"+counterOfTheRows+"' value='"+username_data+"' disabled>";
     password.innerHTML="<input type='text' class='form-control'  id='password_text"+counterOfTheRows+"' value='"+"***********"+"'>";
+    privileges.innerHTML="<input type='text' class='form-control'  id='privileges_text"+counterOfTheRows+"' value='"+privileges_data+"'>";
     name.innerHTML="<input type='text' class='form-control'  id='name_text"+counterOfTheRows+"' value='"+name_data+"'>";
     surname.innerHTML="<input type='text' class='form-control'  id='surname_text"+counterOfTheRows+"' value='"+surname_data+"'>";
     gender.innerHTML="<input type='text' class='form-control' id='gender_text"+counterOfTheRows+"' value='"+gender_data+"'>";
@@ -52,6 +56,7 @@ function save_concrete_row(counterOfTheRows)
     console.log("save here");
     var username_val=document.getElementById("username_text"+counterOfTheRows).value;
     var password_val=document.getElementById("password_text"+counterOfTheRows).value;
+    var privileges_val=document.getElementById("privileges_text"+counterOfTheRows).value;
     var name_val=document.getElementById("name_text"+counterOfTheRows).value;
     var surname_val=document.getElementById("surname_text"+counterOfTheRows).value;
     var gender_val=document.getElementById("gender_text"+counterOfTheRows).value;
@@ -61,6 +66,7 @@ function save_concrete_row(counterOfTheRows)
 
     if(!username_val.match($regexForInputUsername)
         || !password_val.match($regexForInputPassword)
+        || !privileges_val.match($regexForInputPrivileges)
         || !name_val.match($regexForInputName)
         || !surname_val.match($regexForInputSurname)
         || !gender_val.match($regexForInputGender)
@@ -68,7 +74,7 @@ function save_concrete_row(counterOfTheRows)
         || !telephone_val.match($regexForInputTelephone)
         || !address_val.match($regexForInputAddress)) {
 
-        controlEmployeeInputs(username_val, password_val, name_val, surname_val, gender_val, id_val, telephone_val, address_val, counterOfTheRows);
+        controlEmployeeInputs(username_val, password_val, privileges_val,  name_val, surname_val, gender_val, id_val, telephone_val, address_val, counterOfTheRows);
     }
     else{
 
@@ -80,7 +86,7 @@ function save_concrete_row(counterOfTheRows)
             type: "PUT",
             data: JSON.stringify(
                 {   "username":   username_val,
-                    "privileges":      2,
+                    "privileges":      privileges_val,  // 1 for employee , 2 for head, 3 is admin
                     "name":  name_val,
                     "surname": surname_val,
                     "gender": gender_val,
@@ -100,6 +106,7 @@ function save_concrete_row(counterOfTheRows)
 
         document.getElementById("username_row_"+counterOfTheRows).innerHTML=username_val;
         document.getElementById("password_row_"+counterOfTheRows).innerHTML="***********";
+        document.getElementById("privileges_row_"+counterOfTheRows).innerHTML=privileges_val;
         document.getElementById("name_row_"+counterOfTheRows).innerHTML=name_val;
         document.getElementById("surname_row_"+counterOfTheRows).innerHTML=surname_val;
         document.getElementById("gender_row_"+counterOfTheRows).innerHTML=gender_val;
@@ -118,6 +125,7 @@ function add_concrete_row()
     console.log("add here");
     var new_username=document.getElementById("new_username").value;
     var new_password=document.getElementById("new_password").value;
+    var new_privileges=document.getElementById("new_privileges").value;
     var new_name=document.getElementById("new_name").value;
     var new_surname=document.getElementById("new_surname").value;
     var new_gender=document.getElementById("new_gender").value;
@@ -139,6 +147,7 @@ function add_concrete_row()
     console.log("this is new name -> " + new_name);
     if(!new_username.match($regexForInputUsername)
         || !new_password.match($regexForInputPassword)
+        || !new_privileges.match($regexForInputPrivileges)
         || !new_name.match($regexForInputName)
         || !new_surname.match($regexForInputSurname)
         || !new_gender.match($regexForInputGender)
@@ -146,7 +155,7 @@ function add_concrete_row()
         || !new_telephone.match($regexForInputTelephone)
         || !new_address.match($regexForInputAddress)) {
 
-        controlEmployeeInputs(new_username, new_password, new_name, new_surname, new_gender, new_id, new_telephone, new_address, 0);
+        controlEmployeeInputs(new_username, new_password, new_privileges, new_name, new_surname, new_gender, new_id, new_telephone, new_address, 0);
     }
     else{
         var table=document.getElementById("employeeTable");
@@ -155,6 +164,7 @@ function add_concrete_row()
             "<tr id='row"+table_len+"'>" +
             "<td id='username_row_"+table_len+"'>"+new_username+"</td>" +
             "<td id='password_row_"+table_len+"'>"+"***********"+"</td>" +
+            "<td id='privileges_row_"+table_len+"'>"+new_privileges+"</td>" +
             "<td id='name_row_"+table_len+"'>"+new_name+"</td>" +
             "<td id='surname_row_"+table_len+"'>"+new_surname+"</td>" +
             "<td id='gender_row_"+table_len+"'>"+new_gender+"</td>" +
@@ -179,7 +189,7 @@ function add_concrete_row()
             data: JSON.stringify(
                 {   "username":   new_username,
                     "password":   new_password,
-                    "privileges":      2,
+                    "privileges":  new_privileges,  // 1 for employee , 2 for head, 3 is admin
                     "name":  new_name,
                     "surname": new_surname,
                     "gender": new_gender,
@@ -199,6 +209,7 @@ function add_concrete_row()
 
         document.getElementById("new_username").value="";
         document.getElementById("new_password").value="";
+        document.getElementById("new_privileges").value="";
         document.getElementById("new_name").value="";
         document.getElementById("new_surname").value="";
         document.getElementById("new_gender").value="";
@@ -221,7 +232,8 @@ function delete_concrete_row(counterOfTheRows)
     $('#responseMessageDeleteEmployee').empty();
 
     var username_val=document.getElementById("username_row_"+counterOfTheRows).innerHTML;
-    // var password_val=document.getElementById("password_text"+counterOfTheRows).value;
+    // var password_val=document.getElementById("password_text"+counterOfTheRows).innerHTML;
+    var privileges_val=document.getElementById("privileges_row_"+counterOfTheRows).innerHTML;
     var name_val=document.getElementById("name_row_"+counterOfTheRows).innerHTML;
     var surname_val=document.getElementById("surname_row_"+counterOfTheRows).innerHTML;
     var gender_val=document.getElementById("gender_row_"+counterOfTheRows).innerHTML;
@@ -231,6 +243,7 @@ function delete_concrete_row(counterOfTheRows)
 
     console.log("toto posielam" + "\n" +
         "U:" + username_val + "\n" +
+        "PRIVILEGES:" + privileges_val + "\n" +
         "N:" + name_val + "\n" +
         "S:" + surname_val + "\n" +
         "G:" + gender_val + "\n" +
@@ -247,7 +260,7 @@ function delete_concrete_row(counterOfTheRows)
             type: "DELETE",
             data: JSON.stringify(
                 {   "username":   username_val,
-                    "privileges":      2,
+                    "privileges":      privileges_val,
                     "name":  name_val,
                     "surname": surname_val,
                     "gender": gender_val,
@@ -276,7 +289,7 @@ function delete_concrete_row(counterOfTheRows)
 
 }
 
-function controlEmployeeInputs(username, password, name, surname, gender, id, telephone, address, counterOfTheRows){
+function controlEmployeeInputs(username, password, privileges, name, surname, gender, id, telephone, address, counterOfTheRows){
     removeAlertText(counterOfTheRows);
     removeAlertClasses(counterOfTheRows);
 
@@ -290,6 +303,10 @@ function controlEmployeeInputs(username, password, name, surname, gender, id, te
         if(!password.match($regexForInputUsername)){
             $('#badPassword').empty().append("Wrong password (at least 3 chars long)" + '<br>');
             $('#badPassword').addClass("alert alert-danger text-danger font-weight-bold text-center");
+        }
+        if(!privileges.match($regexForInputPrivileges)){
+            $('#badPrivileges').empty().append("Wrong privileges (must be 1(employee) or 2(head))" + '<br>');
+            $('#badPrivileges').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
         if(!name.match($regexForInputName)){
             $('#badName').empty().append("Wrong name (at least 3 chars long)" + '<br>');
@@ -360,6 +377,7 @@ function removeAlertText(counterOfTheRows){
     // for first only
     $('#badUsername').empty();
     $('#badPassword').empty();
+    $('#badPrivileges').empty();
     $('#badName').empty();
     $('#badSurname').empty();
     $('#badGender').empty();
@@ -369,6 +387,7 @@ function removeAlertText(counterOfTheRows){
     if(counterOfTheRows > 0){
         $('#badUsername' + counterOfTheRows+'').remove();
         $('#badPassword' + counterOfTheRows+'').remove();
+        $('#badPrivileges' + counterOfTheRows+'').remove();
         $('#badName' + counterOfTheRows+'').remove();
         $('#badSurname' + counterOfTheRows+'').remove();
         $('#badGender' + counterOfTheRows+'').remove();
@@ -383,6 +402,7 @@ function removeAlertClasses(counterOfTheRows){
     // removing alert classes
     $('#badUsername').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badPassword').removeClass("alert alert-success text-success font-weight-bold text-center");
+    $('#badPrivileges').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badName').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badSurname').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#badGender').removeClass("alert alert-success text-success font-weight-bold text-center");
@@ -392,6 +412,7 @@ function removeAlertClasses(counterOfTheRows){
     if(counterOfTheRows > 0){
         $('#badUsername' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
         $('#badPassword' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
+        $('#badPrivileges' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
         $('#badName' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
         $('#badSurname' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
         $('#badGender' + counterOfTheRows+'').removeClass("alert alert-success text-success font-weight-bold text-center");
@@ -422,6 +443,7 @@ $( document ).ready(function() {
                     "<tr id='row"+table_len+"'>" +
                     "<td id='username_row_"+table_len+"'>"+JsonObject[key].username+"</td>" +
                     "<td id='password_row_"+table_len+"'>"+"***********"+"</td>" +
+                    "<td id='privileges_row_"+table_len+"'>"+JsonObject[key].privileges+"</td>" +
                     "<td id='name_row_"+table_len+"'>"+JsonObject[key].name+"</td>" +
                     "<td id='surname_row_"+table_len+"'>"+JsonObject[key].surname+"</td>" +
                     "<td id='gender_row_"+table_len+"'>"+JsonObject[key].gender+"</td>" +

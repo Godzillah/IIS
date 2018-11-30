@@ -1,5 +1,4 @@
 /* SIDEBAR*/
-
 .nav-sidebar {
     position: fixed;
     bottom: 0;
@@ -7,7 +6,7 @@
     z-index: 1000;
     display: block;
     overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    overflow-y: auto;
     background-color: rgba(204, 165, 115, 0.64);
 }
 

@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="/~xorsak02/IIS/src/frontend/css/sidebar.css"/>
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <!-- TOTO ASI VYMAZEM....-->
-    <!--<link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">-->
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -21,6 +19,9 @@
             $("#navigationPanel").load("/~xorsak02/IIS/src/frontend/html/navigations/navigationPanel.html");
             $("#siderbar").load("/~xorsak02/IIS/src/frontend/html/navigations/siderbar.html")
         });
+    </script>
+    <script>
+        $('select').selectpicker();
     </script>
 </head>
 <body>
@@ -76,24 +77,25 @@
 
                     <tr>
                         <td>
-                            <input type="text" class="form-control" id="new_type">
-                            <div id="badType"></div>
+                            <div class="row justify-content-center">
+                                <input type="text" class="form-control text-center" id="new_type" hidden>
+                                <select id="selectPickerIDType" class="selectpicker" data-live-search="true"></select>
+                            </div>
+                            <div id="badSelectType"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="new_description">
+                            <input type="text" class="form-control text-center" id="new_description" placeholder="name of food (required)">
                             <div id="badDescription"></div>
                         </td>
                         <td>
-                            <input type="text" class="form-control" id="new_price">
+                            <input type="text" class="form-control text-center" id="new_price" placeholder="format: 2.53 (required)">
                             <div id="badPrice"></div>
                         </td>
                         <td id="select">
-                            <input type="text" class="form-control" id="new_ingredients" hidden>
-                            <script>
-                                $('select').selectpicker();
-                            </script>
-                            <select id="selectPickerID" class="selectpicker" multiple data-live-search="true">
-                            </select>
+                            <div class="row justify-content-center">
+                                <input type="text" class="form-control text-center" id="new_ingredients" hidden>
+                                <select id="selectPickerID" class="selectpicker" multiple data-live-search="true"></select>
+                            </div>
                             <div id="badSelect"></div>
                         </td>
                         <td>
