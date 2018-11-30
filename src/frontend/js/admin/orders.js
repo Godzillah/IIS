@@ -6,7 +6,7 @@ var $selected = [];
 $selectedFoodArray = [];
 
 // regexes
-$regexForInputTableID= "^[0-9]+$";
+$regexForInputTableID= "^\\s*[0-9][0-4]?\\s*$";
 $regexForInputOrderID = "^[0-9]+$";
 $regexForInputMeals = "^.{3}.*$";
 
@@ -21,7 +21,7 @@ function add_concrete_row()
         "\nMEALS:" + $selected);
 
     // sem bude kontrola
-    if(!new_tableNumber.match($regexForInputOrderID)
+    if(!new_tableNumber.match($regexForInputTableID)
         || $selected == null){
 
         console.log("wrong");
@@ -164,6 +164,7 @@ function edit_concrete_row(counterOfTheRows)
         $selectedFoodArray = $('#selectPicker' + counterOfTheRows + '').val();
         console.log($selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
         console.log("This is out of ->" + $selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
+        $('#selectPicker' + counterOfTheRows + '').selectpicker('refresh');
     });
     // budu selectnute vsetky co su v riadku
     $('#selectPicker' + counterOfTheRows + '').selectpicker('val', $selectedFoodArray);
@@ -316,7 +317,7 @@ function controlOrderInputs(new_tableOrder , counterOfTheRows, $selectedLength){
     console.log("Pocet riadkov -> " + counterOfTheRows );
     if(counterOfTheRows < 1){
         if(!new_tableOrder.match($regexForInputOrderID)){
-            $('#badTableNumber').empty().append("Wrong table number (must be number)" + '<br>');
+            $('#badTableNumber').empty().append("Wrong table (must be from 1 to 14)" + '<br>');
             $('#badTableNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
         if($selectedLength < 1){
@@ -327,7 +328,7 @@ function controlOrderInputs(new_tableOrder , counterOfTheRows, $selectedLength){
     }
     else{
         if(!new_tableOrder.match($regexForInputOrderID)){
-            $('#table_row_' + counterOfTheRows+'').append("<div " + "id='badTableNumber"+counterOfTheRows+"'>Wrong table number (must be number)</div>");
+            $('#table_row_' + counterOfTheRows+'').append("<div " + "id='badTableNumber"+counterOfTheRows+"'>Wrong table (must be from 1 to 14)</div>");
             $('#badTableNumber' + counterOfTheRows+'').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
         if($selectedLength < 1){
