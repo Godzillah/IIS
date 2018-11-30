@@ -23,16 +23,18 @@ $(document).ready(function (){
                 success: function (response) {
                     console.log(response);
                     var JsonObject= JSON.parse(response);
-                    if(JsonObject.payload.privileges == 1){
-                        console.log("SOM IBA zamestanec");
-                        location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
-                        return;
-                    }
                     // prejde do adminHomePage.html...
                     if(JsonObject.success == false){
                         wrongRegistrationsInputs();
                         return;
                     }
+
+                    if(JsonObject.payload.privileges == 1){
+                        console.log("SOM IBA zamestanec");
+                        location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
+                        return;
+                    }
+
                     console.log("Ukladam jwtToken do sessionStorage");
                     sessionStorage.setItem("jwtToken", JsonObject.payload.jwt);
                     sessionStorage.setItem("privilegesOfUser", JsonObject.payload.privileges);
