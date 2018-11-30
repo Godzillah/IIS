@@ -1,17 +1,16 @@
+/**
+ * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
+ */
 $(document).ready(function () {
-    console.log("Ahoj customerDrinks.js");
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
-            console.log(response);
             var JsonObject = JSON.parse(response);
-
             for (var key in JsonObject) {
                 console.log(JsonObject[key].type);
-                // ak je jedno meal tak budeme appendovat
+                // if there is some drink we will append
                 if (JsonObject[key].type === "drink") {
                     $(".drinkItems").append("<div class=\"drinkItem\">\n" +
                         "                    <div class=\"drinkNamePriceDescription\">\n" +
@@ -20,10 +19,8 @@ $(document).ready(function () {
                         "                    </div>\n" +
                         "                </div>" +
                         "                <br>");
-
                 }
             }
-            console.log("GET method");
         },
     });
 });

@@ -33,4 +33,5 @@ function startLogoutSession() {
     secondTimer = setTimeout("startLogoutSession()", 1000);
 }
 
+// calling concrete method to start session
 startLogoutSession();

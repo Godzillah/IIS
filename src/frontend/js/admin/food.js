@@ -1,10 +1,9 @@
 // array of unique ID (description)
 var $descriptionsArray = [];
-// --------------------------------
+// array of all ingredients
 var $ingredientsArray = [];
 // array of selected ingredients
 var $selectedIngredietsArray = [];
-// --------------------------------
 // array of all type of food
 var $foodTypeArray = ["", "meat", "pizza", "soup", "drink"];
 // array of selected type of food
@@ -16,12 +15,16 @@ $regexForInputDescription = "^.{3}.*$";
 $regexForInputPrice = "^[0-9]+.[0-9]{2}$";
 $regexForInputIngredients = "^.{3}.*$";
 
+/**
+ * Function for edit concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function edit_concrete_row(counterOfTheRows) {
-    console.log("edit here");
     document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("save_button_index_" + counterOfTheRows).style.display = "inline-block";
-    // ukazeme selectpicker
+
+    // show selecpickers
     $('#selectPickerID' + counterOfTheRows + '').selectpicker('show');
     $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('show');
 
@@ -46,10 +49,8 @@ function edit_concrete_row(counterOfTheRows) {
 
     $selectedIngredietsArray = ingredients_data.split(",");
     $foodTypeSelectedArray = meal_data;
-    console.log("This is ingredients arrary -> " + $selectedIngredietsArray);
-    console.log("This is type of food arary -> " + $foodTypeSelectedArray);
 
-    // naplnenie type selecpickeru na jedlo
+    // fill type selectpicker on food
     for (var i = 0; i < $foodTypeArray.length; i++) {
         newOption = document.createElement("option");
         selectPickerFoodRow.appendChild(newOption);
@@ -57,7 +58,7 @@ function edit_concrete_row(counterOfTheRows) {
         $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('refresh');
     }
 
-    // naplnenie jednotliveho selectpickeru...
+    // fill concrete selecpicker on ingrediets
     for (var i = 0; i < $ingredientsArray.length; i++) {
         newOption = document.createElement("option");
         selectPickerRow.appendChild(newOption);
@@ -65,33 +66,32 @@ function edit_concrete_row(counterOfTheRows) {
         $('#selectPickerID' + counterOfTheRows + '').selectpicker('refresh');
     }
 
-    // ziskanie ze sa zmeni selectnutych ingredientcii
+    // onclick change status of selecpicker ingredients
     $('#selectPickerID' + counterOfTheRows + '').off().on('change', function () {
         $selectedIngredietsArray = $('#selectPickerID' + counterOfTheRows + '').val();
-        console.log("Toto je selectpickerIngredicii ->" + $selectedIngredietsArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerID' + counterOfTheRows + '').selectpicker('refresh');
 
     });
-    // ziskanie ze sa zmeni selectnutych jedla....
+    // onclick change status of selecpicker foood
     $('#selectPickerIDType' + counterOfTheRows + '').off().on('change', function () {
         $foodTypeSelectedArray = $('#selectPickerIDType' + counterOfTheRows + '').val();
-        console.log("Toto je selectPickerTypJedla ->" + $foodTypeSelectedArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('refresh');
 
     });
 
-    // budu selectnute vsetky co su v riadku v ingrediecnii
+    // sets all  selected ingredients
     $('#selectPickerID' + counterOfTheRows + '').selectpicker('val', $selectedIngredietsArray);
     $('#selectPickerID' + counterOfTheRows + '').val();
-    // budu selectnuta moznost v type of jedla
+    // set selected food
     $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('val', $foodTypeSelectedArray);
     $('#selectPickerIDType' + counterOfTheRows + '').val();
 }
 
-
+/**
+ * Function for saving concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function save_concrete_row(counterOfTheRows) {
-
-    console.log("save here");
     var meal_val = document.getElementById("meal_text" + counterOfTheRows).value;
     var description_val = document.getElementById("description_text" + counterOfTheRows).value;
     var price_val = document.getElementById("price_text" + counterOfTheRows).value;
@@ -103,14 +103,9 @@ function save_concrete_row(counterOfTheRows) {
         || !price_val.match($regexForInputPrice)
         || $selectedIngredietsArray == null
         || $selectedIngredietsArray == "") {
-        console.log("here");
-
-
-        console.log("save tohoto jedla" + $foodTypeSelectedArray);
         controlFoodInputs($foodTypeSelectedArray, description_val, price_val, counterOfTheRows, $selectedIngredietsArray);
     }
     else {
-        console.log($selectedIngredietsArray);
         $.ajax({
             url: "https://restaurant.memonil.com/meal",
             headers: {
@@ -126,9 +121,6 @@ function save_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("PUT method");
                 removeAlertTextForFood(counterOfTheRows);
                 removeAlertClassesForFood(counterOfTheRows);
             },
@@ -137,30 +129,33 @@ function save_concrete_row(counterOfTheRows) {
         document.getElementById("description_row_" + counterOfTheRows).innerHTML = description_val;
         document.getElementById("price_row_" + counterOfTheRows).innerHTML = price_val + " EUR";
         document.getElementById("ingredients_row_input_" + counterOfTheRows).innerHTML = ingredients_val;
-        // skryt selectpicker
+
+        // hide selectpicker
         $('#selectPickerID' + counterOfTheRows + '').selectpicker('hide');
         $('#selectPickerIDType' + counterOfTheRows + '').selectpicker('hide');
 
         document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "inline-block";
         document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "inline-block";
         document.getElementById("save_button_index_" + counterOfTheRows).style.display = "none";
-        // pozastavanie fce inak by doslo k situacii ze by sa prv reloadla a nezachovalavi by sa zmeny
+        // stops fce, otherwise it can happen that changes will be not stored beacuse location.reload will be quickier
+        // as saving
         setTimeout(function () {
             location.reload(true);
         }, 100);
     }
 }
 
+/**
+*  Function for adding concrete row in the table...
+*/
 function add_concrete_row() {
-    console.log("add here");
     var new_type = document.getElementById("new_type").value;
     var new_description = document.getElementById("new_description").value;
     var new_price = document.getElementById("new_price").value;
     var new_ingredients = document.getElementById("new_ingredients").value;
 
-    // kontrola existujuceho description
+    // checking existing description because of (unique ID)
     for (var i = 0; i < $descriptionsArray.length; i++) {
-        console.log("array -> " + $descriptionsArray[i]);
         if ($descriptionsArray[i] === new_description) {
             $('#badDescription').empty().append("Wrong description (already exists)" + '<br>');
             $('#badDescription').addClass("alert alert-danger text-danger font-weight-bold text-center");
@@ -168,23 +163,13 @@ function add_concrete_row() {
         }
     }
 
-    // sem bude kontrola
+    // controller
     if ($foodTypeSelectedArray == ""
         || $foodTypeSelectedArray == null
         || !new_description.match($regexForInputDescription)
         || !new_price.match($regexForInputPrice)
         || $selectedIngredietsArray == null
         || $selectedIngredietsArray == "") {
-
-        if ($foodTypeSelectedArray == "") {
-            console.log("array ma '' ");
-        }
-        if ($selectedIngredietsArray == "") {
-            console.log("food array je prazdny");
-        }
-
-        console.log("wrong");
-        console.log("This is food selected array -> " + $foodTypeSelectedArray);
         controlFoodInputs($foodTypeSelectedArray, new_description, new_price, 0, $selectedIngredietsArray);
     }
     else {
@@ -203,9 +188,6 @@ function add_concrete_row() {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-
                 var table = document.getElementById("foodTable");
                 var table_len = (table.rows.length) - 1;
                 table.insertRow(table_len).outerHTML =
@@ -235,8 +217,6 @@ function add_concrete_row() {
                     "</td>" +
                     "</tr>";
 
-
-                console.log("POST method");
                 removeAlertTextForFood(table_len);
                 removeAlertClassesForFood(table_len);
 
@@ -258,10 +238,13 @@ function add_concrete_row() {
     }
 }
 
+/**
+ * Function for deleting concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function delete_concrete_row(counterOfTheRows) {
-    console.log("delete here");
 
-    // vycistenie
+    // cleaning
     $('#responseMesssageDeleteFood').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#responseMesssageDeleteFood').empty();
 
@@ -272,16 +255,8 @@ function delete_concrete_row(counterOfTheRows) {
 
     var ingredientsArrayn = ingredients_val.split(",");
 
-    console.log(ingredientsArrayn);
-
-    // orezanie o EUR
+    // trim  EUR
     price_val = price_val.replace(" EUR", "");
-
-    console.log("toto posielam" + "\n" +
-        "M:" + meal_val + "\n" +
-        "D:" + description_val + "\n" +
-        "P:" + price_val + "\n" +
-        "I:" + JSON.stringify(ingredientsArrayn) + "\n");
 
     $('#confirmDeleteModalYes').off().on('click', function () {
         $.ajax({
@@ -299,13 +274,8 @@ function delete_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("DELETE method");
-
                 $('#responseMesssageDeleteFood').addClass("alert alert-success text-success font-weight-bold text-center");
                 $('#responseMesssageDeleteFood').empty().append("Success");
-                console.log("delete row");
                 document.getElementById("row" + counterOfTheRows + "").outerHTML = "";
                 $('#confirmDeleteModal').data('hideInterval', setTimeout(function () {
                     $('#confirmDeleteModal').modal('hide');
@@ -315,16 +285,18 @@ function delete_concrete_row(counterOfTheRows) {
     });
 }
 
+/**
+ * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
+ * also checking selectpickers on change method which detects if something changed
+ */
 $(document).ready(function () {
     $('#selectPickerID').on('change', function () {
         $selectedIngredietsArray = $('#selectPickerID').val();
-        console.log($selectedIngredietsArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerID').selectpicker('refresh');
     });
 
     $('#selectPickerIDType').on('change', function () {
         $foodTypeSelectedArray = $('#selectPickerIDType').val();
-        console.log($foodTypeSelectedArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPickerIDType').selectpicker('refresh');
     });
 
@@ -338,7 +310,7 @@ $(document).ready(function () {
         $('#selectpickerIDType').selectpicker('refresh');
     }
 
-    // zobrat si vsetky ingrediencie
+    // take all ingredients
     $.ajax({
         url: "https://restaurant.memonil.com/ingredient",
         type: "GET",
@@ -349,12 +321,9 @@ $(document).ready(function () {
         success: function (response) {
             // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             for (var key in JsonObject) {
                 $ingredientsArray.push(JsonObject[key].name);
             }
-            console.log("This is the array -> " + $ingredientsArray);
             for (var i = 0; i < $ingredientsArray.length; i++) {
                 newOption = document.createElement("option");
                 selectpickerID.appendChild(newOption);
@@ -372,10 +341,7 @@ $(document).ready(function () {
         },
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             // timeout for selecpicker... 0.05s
             setTimeout(function () {
                 for (var key in JsonObject) {
@@ -410,9 +376,9 @@ $(document).ready(function () {
                     document.getElementById("delete_button_index_" + table_len).style.display = "inline-block";
                     document.getElementById("save_button_index_" + table_len).style.display = "none";
 
-                    // ulozim si taktiez vsetky username do sessionStorage...
+                    // storing all descriptions in the array
                     $descriptionsArray.push(JsonObject[key].description);
-                    // schovanie selectpickeru
+                    // hide selectpicker
                     $('selectPickerID' + table_len + '').selectpicker('hide');
                     $('#selectPickerIDType' + table_len + '').selectpicker('hide');
                 }
@@ -421,15 +387,22 @@ $(document).ready(function () {
     });
 });
 
-
+/**
+ * Controller of inputs
+ * @use removeAlertTextForFood()
+ * @use removeAlertClassesForFood()
+ * @param $foodTypeSelectedArray array of selected foods
+ * @param new_description description of food in the concrete row
+ * @param new_price price of food in the concrete row
+ * @param counterOfTheRows concrete row
+ * @param $selectedLength array of selected ingredients
+ */
 function controlFoodInputs($foodTypeSelectedArray, new_description, new_price, counterOfTheRows, $selectedLength) {
     removeAlertTextForFood(counterOfTheRows);
     removeAlertClassesForFood(counterOfTheRows);
 
-    console.log("Pocet riadkov -> " + counterOfTheRows);
     if (counterOfTheRows < 1) {
         if ($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null) {
-            console.log("prazdny znak");
             $('#badSelectType').empty().append("Wrong select (you must select 1 option)" + '<br>');
             $('#badSelectType').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
@@ -447,9 +420,6 @@ function controlFoodInputs($foodTypeSelectedArray, new_description, new_price, c
         }
     }
     else {
-        console.log("This is pole ingredincii ->" + $selectedLength);
-        console.log("This is pole jedla ->" + $foodTypeSelectedArray);
-
         if ($foodTypeSelectedArray == "" || $foodTypeSelectedArray == null) {
             $('#meal_row_' + counterOfTheRows + '').append("<div " + "id='badSelectType" + counterOfTheRows + "'>Wrong select (you must select 1 option)</div>");
             $('#badSelectType' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center")
@@ -469,6 +439,10 @@ function controlFoodInputs($foodTypeSelectedArray, new_description, new_price, c
     }
 }
 
+/**
+ * Cleaning function for text
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertTextForFood(counterOfTheRows) {
     // removing text
     // for first only
@@ -484,6 +458,10 @@ function removeAlertTextForFood(counterOfTheRows) {
     }
 }
 
+/**
+ * Cleaning function for classes
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertClassesForFood(counterOfTheRows) {
     // removing alert classes
     $('#badSelectType').removeClass("alert alert-success text-success font-weight-bold text-center");

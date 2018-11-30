@@ -1,3 +1,4 @@
+// regexes for inputs
 $regexForInputUsername = "^.{3}.*$";
 $regexForInputPassword = "^.{3}.*$";
 $regexForInputName = "^.{3}.*$";
@@ -9,11 +10,14 @@ $regexForInputTelephone = "^[0-9]{3}[0-9]*$";
 $regexForInputAddress = "^.{3}.*$";
 $regexForInputPrivileges = "^\\s*[1|2|3]\\s*$"
 
-// globalny array vsetkych usernames (unique ID)
+// global array of all usernames (uniquie ID)
 var $usernames = [];
 
+/**
+ * Function for edit concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function edit_concrete_row(counterOfTheRows) {
-    console.log("edit here");
     document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("save_button_index_" + counterOfTheRows).style.display = "inline-block";
@@ -47,11 +51,13 @@ function edit_concrete_row(counterOfTheRows) {
     id.innerHTML = "<input type='text' class='form-control'id='id_text" + counterOfTheRows + "' value='" + id_data + "'>";
     telephone.innerHTML = "<input type='text' class='form-control' id='telephone_text" + counterOfTheRows + "' value='" + telephone_data + "'>";
     address.innerHTML = "<input type='text' class='form-control' id='address_text" + counterOfTheRows + "' value='" + address_data + "'>";
-
 }
 
+/**
+ * Function for saving concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function save_concrete_row(counterOfTheRows) {
-    console.log("save here");
     var username_val = document.getElementById("username_text" + counterOfTheRows).value;
     var password_val = document.getElementById("password_text" + counterOfTheRows).value;
     var privileges_val = document.getElementById("privileges_text" + counterOfTheRows).value;
@@ -95,9 +101,6 @@ function save_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("PUT method");
                 removeAlertText();
                 removeAlertClasses();
             },
@@ -119,8 +122,10 @@ function save_concrete_row(counterOfTheRows) {
     }
 }
 
+/**
+ *  Function for adding concrete row in the table...
+ */
 function add_concrete_row() {
-    console.log("add here");
     var new_username = document.getElementById("new_username").value;
     var new_password = document.getElementById("new_password").value;
     var new_privileges = document.getElementById("new_privileges").value;
@@ -133,7 +138,6 @@ function add_concrete_row() {
 
     // kontrola existujuceho usernameID
     for (var i = 0; i < $usernames.length; i++) {
-        console.log("array -> " + $usernames[i]);
         if ($usernames[i] === new_username) {
             $('#badUsername').empty().append("Wrong username (already exists)" + '<br>');
             $('#badUsername').addClass("alert alert-danger text-danger font-weight-bold text-center");
@@ -141,8 +145,6 @@ function add_concrete_row() {
         }
     }
 
-    // TODO: kontrolnu funkciu pre spravnost inputov..
-    console.log("this is new name -> " + new_name);
     if (!new_username.match($regexForInputUsername)
         || !new_password.match($regexForInputPassword)
         || !new_privileges.match($regexForInputPrivileges)
@@ -198,9 +200,6 @@ function add_concrete_row() {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("POST method");
                 removeAlertText();
                 removeAlertClasses();
             },
@@ -222,10 +221,13 @@ function add_concrete_row() {
     }
 }
 
+/**
+ * Function for deleting concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function delete_concrete_row(counterOfTheRows) {
-    console.log("Rows -> " + counterOfTheRows);
 
-    // vycistenie
+    // cleaning
     $('#responseMessageDeleteEmployee').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#responseMessageDeleteEmployee').empty();
 
@@ -238,16 +240,6 @@ function delete_concrete_row(counterOfTheRows) {
     var id_val = document.getElementById("id_row_" + counterOfTheRows).innerHTML;
     var telephone_val = document.getElementById("telephone_row_" + counterOfTheRows).innerHTML;
     var address_val = document.getElementById("address_row_" + counterOfTheRows).innerHTML;
-
-    console.log("toto posielam" + "\n" +
-        "U:" + username_val + "\n" +
-        "PRIVILEGES:" + privileges_val + "\n" +
-        "N:" + name_val + "\n" +
-        "S:" + surname_val + "\n" +
-        "G:" + gender_val + "\n" +
-        "ID:" + id_val + "\n" +
-        "TEL:" + telephone_val + "\n" +
-        "ADDR:" + address_val + "\n");
 
     $('#confirmDeleteModalYes').off().on('click', function () {
         $.ajax({
@@ -269,15 +261,11 @@ function delete_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("DELETE method");
                 removeAlertText();
                 removeAlertClasses();
 
                 $('#responseMessageDeleteEmployee').addClass("alert alert-success text-success font-weight-bold text-center");
                 $('#responseMessageDeleteEmployee').empty().append("Success");
-                console.log("delete row");
                 document.getElementById("row" + counterOfTheRows + "").outerHTML = "";
                 $('#confirmDeleteModal').data('hideInterval', setTimeout(function () {
                     $('#confirmDeleteModal').modal('hide');
@@ -288,13 +276,24 @@ function delete_concrete_row(counterOfTheRows) {
 
 }
 
+/**
+ * Function which represents controller and also appending errors, also using cleaning helpful fucntions
+ * @param username name of concrete user
+ * @param password password of concrete user
+ * @param privileges 1, 2 or 3 depens of role 1 -> employee, 2 -> head, 3 -> admin(manager)
+ * @param name birth name of person
+ * @param surname surname of concrete user
+ * @param gender male or female
+ * @param id identification number of user
+ * @param telephone concrete telephone of user
+ * @param address concrete address of user
+ * @param counterOfTheRows concrete row in the table
+ */
 function controlEmployeeInputs(username, password, privileges, name, surname, gender, id, telephone, address, counterOfTheRows) {
     removeAlertText(counterOfTheRows);
     removeAlertClasses(counterOfTheRows);
 
-    console.log("Pocet riadkov -> " + counterOfTheRows);
     if (counterOfTheRows < 1) {
-        console.log("Counter < 1");
         if (!username.match($regexForInputUsername)) {
             $('#badUsername').empty().append("Wrong username (at least 3 chars long)" + '<br>');
             $('#badUsername').addClass("alert alert-danger text-danger font-weight-bold text-center");
@@ -333,7 +332,6 @@ function controlEmployeeInputs(username, password, privileges, name, surname, ge
         }
     }
     else {
-
         if (!username.match($regexForInputUsername)) {
             $('#username_row_' + counterOfTheRows + '').append("<div " + "id='badUsername" + counterOfTheRows + "'>Wrong username (at least 3 chars long)</div>");
             $('#badUsername' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center")
@@ -366,13 +364,15 @@ function controlEmployeeInputs(username, password, privileges, name, surname, ge
             $('#address_row_' + counterOfTheRows + '').append("<div " + "id='badAddress" + counterOfTheRows + "'>Wrong address (at least 3 chars long)</div>");
             $('#badAddress' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-
     }
-
 }
 
+/**
+ * Cleaning fuction for my controller
+ * @useIn controlEmployeeInputs()
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertText(counterOfTheRows) {
-    // removing text
     // for first only
     $('#badUsername').empty();
     $('#badPassword').empty();
@@ -397,6 +397,10 @@ function removeAlertText(counterOfTheRows) {
 
 }
 
+/**
+ * Function which removing classess alerts
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertClasses(counterOfTheRows) {
     // removing alert classes
     $('#badUsername').removeClass("alert alert-success text-success font-weight-bold text-center");
@@ -421,6 +425,10 @@ function removeAlertClasses(counterOfTheRows) {
     }
 }
 
+/**
+ * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
+ * , also storing usernames in array to validate if concrete username exits
+ */
 $(document).ready(function () {
     $.ajax({
         url: "https://restaurant.memonil.com/employees",
@@ -430,10 +438,7 @@ $(document).ready(function () {
         },
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             var rowFormatCounter = 0;
             for (var key in JsonObject) {
                 var table = document.getElementById("employeeTable");

@@ -1,22 +1,29 @@
-// GLOBALNA PREMENNA NA ID STOLA...
+// global variable ID of table
 var $idOfTable;
 var $tableId;
 
+// regex for checks input
 $regexForInputId = "^[0-9]+$";
+$regexForInputUsername = "^.{3}.*$";
+$regexForInputSurname = "^.{3}.*$";
+$regexForInputEmail = "^.+\\@.+\\..+$";
+$regexForInputTelephone = "^[0-9]{3}[0-9]*$";
+$regexForTime = "^([1-9]|([012][0-9])|(3[01]))-([0]{0,1}[1-9]|1[012])-\\d\\d\\d\\d [012]{0,1}[0-9]:[0-9][0-9]$";
 
+/**
+ * function which editis concrete reservation
+ */
 function clickEditReservation() {
-    console.log("EDIT FCE");
     var $idOfTheReservation = $("#idOfTheReservation").val();
     $('#idOfReservedTimes').empty();
     $('#idOfReservedTimes').removeClass("text-center text-default h5-responsive");
 
-    // vycistenie alertu...
+    // cleaning alert...
     $('#alertYourReservationNumber').empty();
     $('#alertYourReservationNumber').removeClass("alert alert-success text-success font-weight-bold text-center");
 
-    console.log("Id rezervacie -> " + $idOfTheReservation);
     if ((!$idOfTheReservation.match($regexForInputId))) {
-        // kontrola vstupov f.e : dasdas , eqw eqw,  tqrdsad, xzvhg , @fasd
+        // checking inputs f.e : dasdas , eqw eqw,  tqrdsad, xzvhg , @fasd
         $("#idOfRezervationDoesNotExists").empty().append("Invalid id of reservation");
         $("#idOfRezervationDoesNotExists").addClass("alert alert-danger text-danger font-weight-bold text-center");
         $('#modalCreateReservationForm').removeAttr("data-dismiss");
@@ -27,15 +34,10 @@ function clickEditReservation() {
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
-            // VYMAZANIE ERRORU
             $("#idOfRezervationDoesNotExists").removeClass("alert alert-danger text-danger font-weight-bold text-center");
             $("#idOfRezervationDoesNotExists").empty();
             if (JsonObject == null) {
-                // PRIDANIE ERROR
                 $("#idOfRezervationDoesNotExists").empty().append("Invalid number of reservation");
                 $("#idOfRezervationDoesNotExists").addClass("alert alert-danger text-danger font-weight-bold text-center");
                 $('#modalCreateReservationForm').removeAttr("data-dismiss");
@@ -49,8 +51,6 @@ function clickEditReservation() {
                 $('#modalCreateReservationForm').find('input#idOfModalTelephone').val(JsonObject.telephone);
                 $('#modalCreateReservationForm').find('input#idOfSelectTime').val(JsonObject.date);
                 $tableId = JsonObject.table_id;
-                console.log("This is tableID ->" + $tableId);
-
                 $('#modalCreateReservationForm').attr("data-dismiss", "modal");
                 $('#modalChangeReservation').attr("data-dismiss", "modal");
                 $('#idOfCreateReservationModal').addClass("data-dismiss");
@@ -72,12 +72,6 @@ function clickEditReservation() {
             || !$emailFromInput.match($regexForInputEmail)
             || !$telephoneFromInput.match($regexForInputTelephone)) {
 
-            console.log("toto posielam" + "\n" +
-                "U:" + $usernameFromInput + "\n" +
-                "S:" + $surnameFromInput + "\n" +
-                "E:" + $emailFromInput + "\n" +
-                "Tel:" + $telephoneFromInput + "\n" +
-                "Time:" + $timeFromInput + "\n");
             controlInputs($usernameFromInput, $surnameFromInput, $emailFromInput, $telephoneFromInput, $timeFromInput);
         }
         else {
@@ -96,29 +90,30 @@ function clickEditReservation() {
                     }),
                 contentType: 'application/json;charset=UTF-8',
                 success: function (response) {
-                    console.log("PUT method");
-                    console.log(response);
                     $('#alertYourReservationNumber').removeClass("alert alert-danger text-danger font-weight-bold text-center");
                     $('#alertYourReservationNumber').addClass("alert alert-success text-success font-weight-bold text-center");
                     $('#alertYourReservationNumber').empty().append("Success");
                     $('#modalCreateReservationForm').data('hideInterval', setTimeout(function () {
                         $('#modalCreateReservationForm').modal('hide');
                         $('#modalChangeReservation').modal('hide');
-                    }, 2000));
+                    }, 1000));
                 }
             });
         }
     });
 }
 
+/**
+ * Function which delete concrete reservation by input of the identification number
+ * @returns {number}
+ */
 function clickDeleteReservation() {
-    console.log("DELETE FCE");
     var $idOfTheReservation = $("#idOfTheDeletingReservation").val();
 
     $('#idOfReservedTimes').empty();
     $('#idOfReservedTimes').removeClass("text-center text-default h5-responsive");
 
-    // vycistenie alertu...
+    // cleaning alertu...
     $('#alertYourReservationNumber').empty();
     $('#alertYourReservationNumber').removeClass("alert alert-success text-success font-weight-bold text-center");
 
@@ -133,15 +128,10 @@ function clickDeleteReservation() {
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
-            // VYMAZANIE ERRORU
             $("#idOfRezervationDoesNotExistsDelete").removeClass("alert alert-danger text-danger font-weight-bold text-center");
             $("#idOfRezervationDoesNotExistsDelete").empty();
             if (JsonObject == null) {
-                // PRIDANIE ERROR
                 $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid id of reservation");
                 $("#idOfRezervationDoesNotExistsDelete").addClass("alert alert-danger text-danger font-weight-bold text-center");
                 $('#modalLoginForm').removeAttr("data-dismiss");
@@ -158,18 +148,13 @@ function clickDeleteReservation() {
                 $('#idDeleteReservationButton').attr("data-dismiss", "modal");
 
                 $('#idOfCreateReservationModal').off().on('click', function () {
-                    // TODO: ziskanie si aktualnych hodnot (done)
                     var $usernameFromInput = $("#idOfModalName").val();
                     var $surnameFromInput = $("#idOfModalSurname").val();
                     var $emailFromInput = $("#idOfModalEmail").val();
-                    // 10-01-2018 12:00
                     var $telephoneFromInput = $("#idOfModalTelephone").val();
                     var $timeFromInput = $("#idOfSelectTime").val();
                     $tableId = JsonObject.table_id;
 
-                    console.log("Send " + $usernameFromInput + "|" + $surnameFromInput + "|" + $emailFromInput + "|" + $telephoneFromInput + "|"
-                        + $timeFromInput + "|" + $idOfTheReservation + "|" + $tableId);
-                    // TODO: ulozenie do modalLoginForm + zavolanie metody PUT do url....
                     $.ajax({
                         url: "https://restaurant.memonil.com/reservate",
                         type: "DELETE",
@@ -185,15 +170,13 @@ function clickDeleteReservation() {
                             }),
                         contentType: 'application/json;charset=UTF-8',
                         success: function (response) {
-                            console.log(response);
-                            console.log("DELETE method");
                             $('#alertYourReservationNumber').removeClass("alert alert-danger text-danger font-weight-bold text-center");
                             $('#alertYourReservationNumber').addClass("alert alert-success text-success font-weight-bold text-center");
                             $('#alertYourReservationNumber').empty().append("Success");
                             $('#modalCreateReservationForm').data('hideInterval', setTimeout(function () {
                                 $('#modalCreateReservationForm').modal('hide');
                                 $('#modalDeleteReservation').modal('hide');
-                            }, 2000));
+                            }, 1000));
                         }
                     });
                 });
@@ -202,62 +185,41 @@ function clickDeleteReservation() {
     });
 }
 
-$regexForInputUsername = "^.{3}.*$";
-$regexForInputSurname = "^.{3}.*$";
-$regexForInputEmail = "^.+\\@.+\\..+$";
-$regexForInputTelephone = "^[0-9]{3}[0-9]*$";
-$regexForTime = "^([1-9]|([012][0-9])|(3[01]))-([0]{0,1}[1-9]|1[012])-\\d\\d\\d\\d [012]{0,1}[0-9]:[0-9][0-9]$";
-
-
 /**
  * Function which getting id of the clicked table -> and then sends id to the SERVER -> and then parsing or returning bad message..
  */
 function clickTable(clicked_id) {
-    console.log("CLICK FCE");
-    // pridanie class na vsetky rezervovane casy...
+    // add class on all reservated times...
     $('#idOfReservedTimes').addClass("text-center text-default h5-responsive");
-
-    // vycistenie alertu...
+    // cleaning alert...
     $('#alertYourReservationNumber').empty();
     $('#alertYourReservationNumber').removeClass("alert alert-success text-success font-weight-bold text-center");
 
-    console.log("Id ktore sa bude posielat -> " + clicked_id);
     $.ajax({
         url: "https://restaurant.memonil.com/reservation" + "?table=" + clicked_id,
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
-            console.log(response);
-            console.log("GET method");
             var JsonObject = JSON.parse(response);
-            // PRECISTENIE HODNOT
             clearInputModalValues();
-
             $('#idOfReservedTimes').empty().append("Reserved times" + "<br>");
             for (var key in JsonObject) {
                 $('#idOfReservedTimes').append(JsonObject[key].start_date + "->" + JsonObject[key].end_date + "<br>");
             }
         },
     });
-    // posielanie modalu...
     $('#idOfCreateReservationModal').off().on('click', function () {
         var $usernameFromInput = $("#idOfModalName").val();
         var $surnameFromInput = $("#idOfModalSurname").val();
         var $emailFromInput = $("#idOfModalEmail").val();
-        // 10-01-2018 12:00
         var $telephoneFromInput = $("#idOfModalTelephone").val();
         var $timeFromInput = $("#idOfSelectTime").val();
-
-        console.log("Send " + $usernameFromInput + "|" + $surnameFromInput + "|" + $emailFromInput + "|" + $telephoneFromInput + "|"
-            + $timeFromInput + "|" + clicked_id);
-        // this regex matches 01-11-2015 13:20 and also 01-11-2015 13:20
+        // controlling concrete values
         if (!$timeFromInput.match($regexForTime)
             || !$usernameFromInput.match($regexForInputUsername)
             || !$surnameFromInput.match($regexForInputSurname)
             || !$emailFromInput.match($regexForInputEmail)
             || !$telephoneFromInput.match($regexForInputTelephone)) {
-
             controlInputs($usernameFromInput, $surnameFromInput, $emailFromInput, $telephoneFromInput, $timeFromInput);
             return;
         }
@@ -276,18 +238,13 @@ function clickTable(clicked_id) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("POST method");
                 var JsonObject = JSON.parse(response);
                 if (JsonObject.success === false) {
-                    // osetrenie ak pride zly...
                     $('#alertYourReservationNumber').empty().append("Table has been already reserved at that time");
                     $('#alertYourReservationNumber').removeClass("alert alert-success text-danger font-weight-bold text-center");
                     $('#alertYourReservationNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
                 }
                 else {
-                    // prejde do adminHomePage.html...4
                     $('#alertYourReservationNumber').removeClass("alert alert-danger text-danger font-weight-bold text-center");
                     $('#alertYourReservationNumber').addClass("alert alert-success text-success font-weight-bold text-center");
                     $('#alertYourReservationNumber').empty().append("Correct your reservation number is -> " + JsonObject.reservationId);
@@ -301,7 +258,7 @@ function clickTable(clicked_id) {
 }
 
 /**
- *
+ * Cleaning function for emptying modal inputs
  */
 function clearInputModalValues() {
     document.getElementById("idOfModalName").value = "";
@@ -315,8 +272,6 @@ function clearInputModalValues() {
  * Function which cotrols whole inputs with help of regexes
  */
 function controlInputs(username, surname, email, telephone, time) {
-    // TODO: tuto kontrolu tam potom daj naspat
-    // vycistenie
     $('#alertYourReservationNumber').empty();
 
     if (!username.match($regexForInputUsername)) {

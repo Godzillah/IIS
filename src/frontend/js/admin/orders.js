@@ -10,20 +10,18 @@ $regexForInputTableID = "^\\s*[0-9][0-4]?\\s*$";
 $regexForInputOrderID = "^[0-9]+$";
 $regexForInputMeals = "^.{3}.*$";
 
+/**
+ *  Function for adding concrete row in the table...
+ */
 function add_concrete_row() {
-    console.log("ADD here");
     var new_tableNumber = document.getElementById("new_table_number").value;
     var new_meals = document.getElementById("new_meals").value;
 
-    console.log("posiela sa : " +
-        "\nTable number:" + new_tableNumber +
-        "\nMEALS:" + $selected);
-
-    // sem bude kontrola
+    // controlling inputs
     if (!new_tableNumber.match($regexForInputTableID)
-        || $selected == null) {
+        || $selected == null
+        || $selected == "") {
 
-        console.log("wrong");
         controlOrderInputs(new_tableNumber, 0, $selected);
         return;
     }
@@ -41,8 +39,6 @@ function add_concrete_row() {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
                 var table = document.getElementById("orderTable");
                 var table_len = (table.rows.length) - 1;
                 table.insertRow(table_len).outerHTML =
@@ -63,7 +59,6 @@ function add_concrete_row() {
                     "</td>" +
                     "</tr>";
 
-                console.log("POST method");
                 removeAlertTextForOrder(table_len);
                 removeAlertClassesForOrder(table_len);
 
@@ -79,10 +74,13 @@ function add_concrete_row() {
     }
 }
 
+/**
+ * Function for deleting concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function delete_concrete_row(counterOfTheRows) {
-    console.log("delete here");
 
-    // vycistenie
+    // cleaning
     $('#responseMesssageDeleteOrder').removeClass("alert alert-success text-success font-weight-bold text-center");
     $('#responseMesssageDeleteOrder').empty();
 
@@ -91,12 +89,6 @@ function delete_concrete_row(counterOfTheRows) {
     var meal_val = document.getElementById("meal_row_input_" + counterOfTheRows).innerHTML;
 
     var foodArrays = meal_val.split(",");
-    console.log(foodArrays);
-
-    console.log("toto posielam" + "\n" +
-        "ORDER:" + order_val + "\n" +
-        "TABLE_N:" + table_val + "\n" +
-        "MEAL:" + JSON.stringify(foodArrays) + "\n");
 
     $('#confirmDeleteModalYes').off().on('click', function () {
         $.ajax({
@@ -113,13 +105,8 @@ function delete_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("DELETE method");
-
                 $('#responseMesssageDeleteOrder').addClass("alert alert-success text-success font-weight-bold text-center");
                 $('#responseMesssageDeleteOrder').empty().append("Success");
-                console.log("delete row");
                 document.getElementById("row" + counterOfTheRows + "").outerHTML = "";
                 $('#confirmDeleteModal').data('hideInterval', setTimeout(function () {
                     $('#confirmDeleteModal').modal('hide');
@@ -129,8 +116,11 @@ function delete_concrete_row(counterOfTheRows) {
     });
 }
 
+/**
+ * Function for edit concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function edit_concrete_row(counterOfTheRows) {
-    console.log("edit here");
     document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "none";
     document.getElementById("save_button_index_" + counterOfTheRows).style.display = "inline-block";
@@ -149,44 +139,40 @@ function edit_concrete_row(counterOfTheRows) {
 
     // reset values of selectpicker
     $('#selectPicker' + counterOfTheRows + '').empty();
-    console.log("removing atrr hiideen on row -> " + counterOfTheRows);
-    // naplnenie jednotliveho selectpickeru...
+    // fill value of concrete  selectpicker...
     for (var i = 0; i < $foodArray.length; i++) {
-        console.log("Pridavam2 -> " + $foodArray[i]);
         newOption = document.createElement("option");
         selectPickerRow.appendChild(newOption);
         newOption.innerHTML = $foodArray[i];
         $('#selectPicker' + counterOfTheRows + '').selectpicker('refresh');
     }
-    // ziskanie ze sa zmeni selectnutych zloziek....
+    // onclick change status of selecpicker meals
     $('#selectPicker' + counterOfTheRows + '').off().on('change', function () {
         $selectedFoodArray = $('#selectPicker' + counterOfTheRows + '').val();
-        console.log($selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
-        console.log("This is out of ->" + $selectedFoodArray); // ziskanie vsetkych hodnot z select pickeru..
         $('#selectPicker' + counterOfTheRows + '').selectpicker('refresh');
     });
-    // budu selectnute vsetky co su v riadku
+    // sets all  selected ingredients
     $('#selectPicker' + counterOfTheRows + '').selectpicker('val', $selectedFoodArray);
     $('#selectPicker' + counterOfTheRows + '').val();
-    console.log("Toto su hodnoty----> " + $('#selectPicker' + counterOfTheRows + '').val());
-    // ukazeme selectpicker
+    // show selectpicker
     $('#selectPicker' + counterOfTheRows + '').selectpicker('show');
 }
 
+/**
+ * Function for saving concrete row in the table...
+ * @param counterOfTheRows concrete number of row
+ */
 function save_concrete_row(counterOfTheRows) {
-    console.log("save here");
     var table_val = document.getElementById("table_text" + counterOfTheRows).value;
     var order_val = document.getElementById("order_row_" + counterOfTheRows).innerHTML;
 
-    // sem bude kontrola
+    // controlling inputs
     if (!table_val.match($regexForInputTableID)
         || $selectedFoodArray == null) {
-        console.log("wrong");
         controlOrderInputs(table_val, counterOfTheRows, $selectedFoodArray);
         return;
     }
     else {
-        console.log($selectedFoodArray);
         $.ajax({
             url: "https://restaurant.memonil.com/order",
             headers: {
@@ -201,9 +187,6 @@ function save_concrete_row(counterOfTheRows) {
                 }),
             contentType: 'application/json;charset=UTF-8',
             success: function (response) {
-                // handle the response
-                console.log(response);
-                console.log("PUT method");
                 removeAlertTextForOrder(counterOfTheRows);
                 removeAlertClassesForOrder(counterOfTheRows);
             },
@@ -211,12 +194,13 @@ function save_concrete_row(counterOfTheRows) {
         document.getElementById("table_row_" + counterOfTheRows).innerHTML = table_val;
         document.getElementById("meal_row_input_" + counterOfTheRows).innerHTML = $selectedFoodArray;
 
-        // skryt selectpicker
+        // hide selectpicker
         $('#selectPicker' + counterOfTheRows + '').selectpicker('hide');
         document.getElementById("edit_button_index_" + counterOfTheRows).style.display = "inline-block";
         document.getElementById("delete_button_index_" + counterOfTheRows).style.display = "inline-block";
         document.getElementById("save_button_index_" + counterOfTheRows).style.display = "none";
-        // pozastavanie fce inak by doslo k situacii ze by sa prv reloadla a nezachovalavi by sa zmeny
+        // stops fce, otherwise it can happen that changes will be not stored beacuse location.reload will be quickier
+        // as saving
         setTimeout(function () {
             location.reload(true);
         }, 100);
@@ -224,16 +208,18 @@ function save_concrete_row(counterOfTheRows) {
 
 }
 
+/**
+ * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
+ * also checking selectpickers on change method which detects if something changed
+ */
 $(document).ready(function () {
     $('#selectPickerID').on('change', function () {
         $selected = $('#selectPickerID').val();
-        console.log($selected); // ziskanie vsetkych hodnot z select pickeru..
-        console.log("This is out of ->" + $selected); // ziskanie vsetkych hodnot z select pickeru..
     });
 
     var selectpickerID = document.getElementById('selectPickerID');
 
-    // zobrat si vsetky jedla
+    // show all meals in the selectpicker
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
         type: "GET",
@@ -244,14 +230,10 @@ $(document).ready(function () {
         success: function (response) {
             // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             for (var key in JsonObject) {
                 $foodArray.push(JsonObject[key].description);
             }
-            console.log("This is the array -> " + $foodArray);
             for (var i = 0; i < $foodArray.length; i++) {
-                console.log("Pridavam2 -> " + $foodArray[i]);
                 newOption = document.createElement("option");
                 selectpickerID.appendChild(newOption);
                 newOption.innerHTML = $foodArray[i];
@@ -268,10 +250,7 @@ $(document).ready(function () {
         },
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             for (var key in JsonObject) {
                 var table = document.getElementById("orderTable");
                 var table_len = (table.rows.length) - 1;
@@ -300,26 +279,29 @@ $(document).ready(function () {
                 document.getElementById("edit_button_index_" + table_len).style.display = "inline-block";
                 document.getElementById("delete_button_index_" + table_len).style.display = "inline-block";
                 document.getElementById("save_button_index_" + table_len).style.display = "none";
-                // schovanie selectpickeru
+                // hide selectpickeru
                 $('#selectPicker' + table_len + '').selectpicker('hide');
             }
         },
     });
 });
 
-
+/**
+ * Controller of inputs
+ * @param new_tableOrder concrete table order
+ * @param counterOfTheRows concrete table row
+ * @param $selectedLength array of the meals
+ */
 function controlOrderInputs(new_tableOrder, counterOfTheRows, $selectedLength) {
     removeAlertTextForOrder(counterOfTheRows);
     removeAlertClassesForOrder(counterOfTheRows);
 
-    console.log("Pocet riadkov -> " + counterOfTheRows);
     if (counterOfTheRows < 1) {
         if (!new_tableOrder.match($regexForInputOrderID)) {
             $('#badTableNumber').empty().append("Wrong table (must be from 1 to 14)" + '<br>');
             $('#badTableNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if ($selectedLength < 1) {
-            console.log("Pocet selektnutych -> " + $selectedLength);
+        if ($selectedLength == null || $selectedLength == "") {
             $('#badSelectItems').empty().append("Wrong select (at least 1 select)" + '<br>');
             $('#badSelectItems').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
@@ -329,13 +311,17 @@ function controlOrderInputs(new_tableOrder, counterOfTheRows, $selectedLength) {
             $('#table_row_' + counterOfTheRows + '').append("<div " + "id='badTableNumber" + counterOfTheRows + "'>Wrong table (must be from 1 to 14)</div>");
             $('#badTableNumber' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
-        if ($selectedLength < 1) {
+        if ($selectedLength == null || $selectedLength == "") {
             $('#meal_row_' + counterOfTheRows + '').append("<div " + "id='badSelectItems" + counterOfTheRows + "'>Wrong select (at least 1 select)</div>");
             $('#badSelectItems' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
     }
 }
 
+/**
+ * Cleaning function for text
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertTextForOrder(counterOfTheRows) {
     // removing text
     // for first only
@@ -347,6 +333,10 @@ function removeAlertTextForOrder(counterOfTheRows) {
     }
 }
 
+/**
+ * Cleaning function for classes
+ * @param counterOfTheRows concrete row in the table
+ */
 function removeAlertClassesForOrder(counterOfTheRows) {
     // removing alert classes
     $('#badTableNumber').removeClass("alert alert-success text-success font-weight-bold text-center");

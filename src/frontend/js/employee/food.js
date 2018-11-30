@@ -1,3 +1,7 @@
+/**
+ * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
+ * this is for employee so he will see only all meals and have no permission to edit save and delete
+ */
 $(document).ready(function () {
     $.ajax({
         url: "https://restaurant.memonil.com/meals",
@@ -7,10 +11,7 @@ $(document).ready(function () {
         },
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
-            // handle the response
             var JsonObject = JSON.parse(response);
-            console.log(response);
-            console.log("GET method");
             for (var key in JsonObject) {
                 var table = document.getElementById("foodTable");
                 var table_len = (table.rows.length) - 1;
@@ -23,7 +24,6 @@ $(document).ready(function () {
                     "<div id='ingredients_row_input_" + table_len + "'>" + JsonObject[key].ingredients + "</div>" +
                     "</td>" +
                     "</tr>";
-
             }
         },
     });
