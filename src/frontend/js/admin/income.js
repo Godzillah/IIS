@@ -1,4 +1,6 @@
+// chart for income overview
 var ctxL = document.getElementById("incomeChart").getContext('2d');
+// in Json format
 var incomeChart = new Chart(ctxL, {
     type: 'line',
     data: {
