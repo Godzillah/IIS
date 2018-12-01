@@ -1,112 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Food</title>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/~xorsak02/IIS/src/frontend/css/sidebar.css"/>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
-    <!-- TOTO SA BUDE MAZAT -->
-    <!--<link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">-->
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-    <script>
-        $(function(){
+	<title>Food</title>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Compatible"
+	      content="IE=edge">
+	<link rel="stylesheet"
+	      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css"/>
+	<link href="/~xorsak02/IIS/src/frontend/MDB/css/mdb.min.css" rel="stylesheet">
+	<link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/~xorsak02/IIS/src/frontend/css/sidebar.css"/>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+	<link href="/~xorsak02/IIS/src/frontend/MDB/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="/~xorsak02/IIS/src/frontend/MDB/js/popper.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	<script>
+        $(function () {
             $("#navigationPanel").load("/~xorsak02/IIS/src/frontend/html/navigations/navigationPanel.html");
             $("#siderbar").load("/~xorsak02/IIS/src/frontend/html/navigations/siderbar.html")
         });
-    </script>
-    <script>
+	</script>
+	<script>
         $('select').selectpicker();
-    </script>
+	</script>
 </head>
 <body>
-    <!-- CONFIRM DELETED MODAL-->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmDeleteModalLabel">Are you sure you want to delete ?</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="responseMesssageDeleteOrder"></div>
-                <div class="modal-footer">
-                    <button id="confirmDeleteModalYes" type="button" class="btn btn-danger">Yes</button>
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- CONFIRM DELETED MODAL-->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+     aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="confirmDeleteModalLabel">Are you sure you want to delete ?</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div id="responseMesssageDeleteOrder"></div>
+			<div class="modal-footer">
+				<button id="confirmDeleteModalYes" type="button" class="btn btn-danger">Yes</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
-    <!-- NAV PANEL-->
-    <div id="navigationPanel"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar lighten-2 brown">
-                <div id="siderbar"></div>
-            </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div class="wrapper-modal-editor">
-                    <div class="block my-4">
-                        <div class="d-flex justify-content-center">
-                            <p class="h2 text-black-50 createShowP">Orders<img width="60px" src="/~xorsak02/IIS/src/frontend/images/ordersIcon.png"></p>
-                        </div>
-                    </div>
-                </div>
-                <table id="orderTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                    <tr>
-                        <th class="h3 brown-text th-sm">Order number
-                        </th>
-                        <th class="h3 brown-text th-sm">Table number
-                        </th>
-                        <th class="h3 brown-text th-sm">Meals
-                        </th>
-                        <th class="h3 brown-text th-sm">Price
-                        </th>
-                        <th class="h3 brown-text th-sm">Date
-                        </th>
-                        <th class="h3 brown-text th-sm">Served by
-                        </th>
-                        <th class="h3 brown-text th-sm">Options
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" id="new_table_number" placeholder="between 1 to 14 table (required)">
-                            <div id="badTableNumber"></div>
-                        </td>
-                        <td>
-                            <div class="row justify-content-center">
-                                <input type="text" class="form-control" id="new_meals" hidden>
-                                <select id="selectPickerID" class="selectpicker" multiple data-live-search="true">
-                                </select>
-                                <div id="badSelectItems"></div>
-                            </div>
-
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <div class="row justify-content-center">
-                                <i class="fa fa-plus buttonAdd" style="font-size: 40px;color: forestgreen;" aria-hidden="true" onclick="add_concrete_row();"></i>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-    <script src="/~xorsak02/IIS/src/frontend/js/admin/orders.js"></script>
+<!-- NAV PANEL-->
+<div id="navigationPanel"></div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar lighten-2 brown">
+			<div id="siderbar"></div>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div class="wrapper-modal-editor">
+				<div class="block my-4">
+					<div class="d-flex justify-content-center">
+						<p class="h2 text-black-50 createShowP">Orders<img width="60px"
+						                                                   src="/~xorsak02/IISimages/ordersIcon.png">
+						</p>
+					</div>
+				</div>
+			</div>
+			<table id="orderTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+				<tr>
+					<th class="h3 brown-text th-sm">Order number
+					</th>
+					<th class="h3 brown-text th-sm">Table number
+					</th>
+					<th class="h3 brown-text th-sm">Meals
+					</th>
+					<th class="h3 brown-text th-sm">Price
+					</th>
+					<th class="h3 brown-text th-sm">Date
+					</th>
+					<th class="h3 brown-text th-sm">Served by
+					</th>
+					<th class="h3 brown-text th-sm">Options
+					</th>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<input type="text" class="form-control" id="new_table_number"
+						       placeholder="between 1 to 14 table (required)">
+						<div id="badTableNumber"></div>
+					</td>
+					<td>
+						<div class="row justify-content-center">
+							<input type="text" class="form-control" id="new_meals" hidden>
+							<select id="selectPickerID" class="selectpicker" multiple data-live-search="true">
+							</select>
+						</div>
+						<div id="badSelectItems"></div>
+					</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<div class="row justify-content-center">
+							<i class="fa fa-plus buttonAdd" style="font-size: 40px;color: forestgreen;"
+							   aria-hidden="true" onclick="add_concrete_row();"></i>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<script src="/~xorsak02/IIS/src/frontend/js/admin/orders.js"></script>
 </body>
 </html>
