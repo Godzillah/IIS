@@ -44,7 +44,7 @@ function chooseRole() {
             "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/income.html\">Income</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/statistics.html\">Statistics</a></li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/employees.html\">Employees</a></li>\n" +

@@ -3,11 +3,13 @@ $arrayOfIncomes = [];
 $arrayOfOrders = [];
 $arrayOfMonths = [];
 
+
 /**
  * On ready function which fetch all data from API  https://restaurant.memonil.com/ with GET method
  * getting whole staticstics about year
  */
 $(document).ready(function () {
+    // take all ingredients
     $.ajax({
         url: "https://restaurant.memonil.com/statistics",
         type: "GET",
@@ -16,12 +18,18 @@ $(document).ready(function () {
         },
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
+            // handle the response
+            console.log(response);
             var JsonObject = JSON.parse(response);
             for (var key in JsonObject) {
+                console.log("Toto je Json prijmov  -> " + JsonObject[key].income);
+                console.log("Toto je Json objednavok -> " + JsonObject[key].orders);
+                console.log("This is a key -> " + key);
                 $arrayOfIncomes.push(JsonObject[key].income);
                 $arrayOfOrders.push(JsonObject[key].orders);
                 $arrayOfMonths.push(key);
             }
+            console.log("This is a array -> " + JSON.stringify($arrayOfMonths));
             var chartForIncome = document.getElementById("incomeChart").getContext('2d');
             var incomeChart = new Chart(chartForIncome, {
                 type: 'bar',
