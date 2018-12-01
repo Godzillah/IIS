@@ -1,17 +1,17 @@
 // after ten minutes of inactivity logout a redirect to loginPage.html
-var startingSecondToLogout = 600; // 10 minutes (600s)
-var sessionSeconds = 0;
+var inactiveSessionAllowedTime = 600; // 10 minutes (600s)
+var counterOfInactiveSeconds = 0;
 
 // on key press reseting timer
 $(function () {
     $("body").on('click keypress', function () {
-        sessionSeconds = 0;
+        counterOfInactiveSeconds = 0;
     });
 });
 // on mouse move reseting timer
 $(function () {
     $("body").mousemove(function () {
-        sessionSeconds = 0;
+        counterOfInactiveSeconds = 0;
     });
 });
 
@@ -23,14 +23,17 @@ function redirectAndAlert() {
 
 // logout session starts
 function startLogoutSession() {
-    sessionSeconds++;
-    if (sessionSeconds > startingSecondToLogout) {
+    counterOfInactiveSeconds++;
+    // var timeToLeft = inactiveSessionAllowedTime - counterOfInactiveSeconds;
+
+    if (counterOfInactiveSeconds > inactiveSessionAllowedTime) {
         clearTimeout(secondTimer);
         redirectAndAlert();
         return;
     }
     // logout session repeating every second
     secondTimer = setTimeout("startLogoutSession()", 1000);
+    // console.log("Zbýva ---> " + timeToLeft);
 }
 
 // calling concrete method to start session

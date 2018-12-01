@@ -14,7 +14,7 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IIS/src/frontend/images/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
@@ -27,7 +27,7 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IIS/src/frontend/images/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
@@ -41,7 +41,7 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IIS/src/frontend/images/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/income.html\">Income</a></li>\n" +
