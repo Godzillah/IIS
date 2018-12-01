@@ -6,8 +6,7 @@ var $selected = [];
 $selectedFoodArray = [];
 
 // regexes
-$regexForInputTableID = "^\\s*[0-9][0-4]?\\s*$";
-$regexForInputOrderID = "^[0-9]+$";
+$regexForInputTableID = "^\\s*[1-9][0-4]?\\s*$";
 $regexForInputMeals = "^.{3}.*$";
 
 /**
@@ -297,7 +296,7 @@ function controlOrderInputs(new_tableOrder, counterOfTheRows, $selectedLength) {
     removeAlertClassesForOrder(counterOfTheRows);
 
     if (counterOfTheRows < 1) {
-        if (!new_tableOrder.match($regexForInputOrderID)) {
+        if (!new_tableOrder.match($regexForInputTableID)) {
             $('#badTableNumber').empty().append("Wrong table (must be from 1 to 14)" + '<br>');
             $('#badTableNumber').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
@@ -307,7 +306,7 @@ function controlOrderInputs(new_tableOrder, counterOfTheRows, $selectedLength) {
         }
     }
     else {
-        if (!new_tableOrder.match($regexForInputOrderID)) {
+        if (!new_tableOrder.match($regexForInputTableID)) {
             $('#table_row_' + counterOfTheRows + '').append("<div " + "id='badTableNumber" + counterOfTheRows + "'>Wrong table (must be from 1 to 14)</div>");
             $('#badTableNumber' + counterOfTheRows + '').addClass("alert alert-danger text-danger font-weight-bold text-center");
         }
