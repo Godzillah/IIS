@@ -105,14 +105,17 @@ function clickDeleteReservation() {
     var $idOfTheReservation = $("#idOfTheDeletingReservation").val();
     $('#idOfReservedTimes').empty();
     $('#idOfReservedTimes').removeClass("text-center text-default h5-responsive");
+    // clearing delete alert
+    $("#idOfRezervationDoesNotExistsDelete").removeClass("alert alert-danger text-danger font-weight-bold text-center");
+    $("#idOfRezervationDoesNotExistsDelete").empty();
 
     $('#alertYourReservationNumber').empty();
     $('#alertYourReservationNumber').removeClass("alert alert-success text-success font-weight-bold text-center");
     if (!($idOfTheReservation.match($regexForInputId))) {
-        $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid id of reservation");
+        $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid number of reservation");
         $("#idOfRezervationDoesNotExistsDelete").addClass("alert alert-danger text-danger font-weight-bold text-center");
         $('#modalLoginForm').removeAttr("data-dismiss");
-        return 0;
+        return;
     }
     $.ajax({
         url: "https://restaurant.memonil.com/reservate" + "?reservation_id=" + $idOfTheReservation,
@@ -120,10 +123,9 @@ function clickDeleteReservation() {
         contentType: 'application/json;charset=UTF-8',
         success: function (response) {
             var JsonObject = JSON.parse(response);
-            $("#idOfRezervationDoesNotExistsDelete").removeClass("alert alert-danger text-danger font-weight-bold text-center");
-            $("#idOfRezervationDoesNotExistsDelete").empty();
+
             if (JsonObject == null) {
-                $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid id of reservation");
+                $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid number of reservation");
                 $("#idOfRezervationDoesNotExistsDelete").addClass("alert alert-danger text-danger font-weight-bold text-center");
                 $('#modalLoginForm').removeAttr("data-dismiss");
             }

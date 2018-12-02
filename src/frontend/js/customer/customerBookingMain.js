@@ -121,7 +121,7 @@ function clickDeleteReservation() {
         $("#idOfRezervationDoesNotExistsDelete").empty().append("Invalid id of reservation");
         $("#idOfRezervationDoesNotExistsDelete").addClass("alert alert-danger text-danger font-weight-bold text-center");
         $('#modalLoginForm').removeAttr("data-dismiss");
-        return 0;
+        return;
     }
     $.ajax({
         url: "https://restaurant.memonil.com/reservate" + "?reservation_id=" + $idOfTheReservation,
