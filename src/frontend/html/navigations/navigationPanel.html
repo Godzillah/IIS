@@ -1,3 +1,9 @@
+<script>
+	// clearing session storage
+	function clearSessionStorage(){
+	    sessionStorage.clear();
+	}
+</script>
 <nav class="navbar navbar-expand-md navbar-dark brown lighten-2">
 	<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
 		<ul class="navbar-nav mr-auto">
@@ -18,7 +24,7 @@
 					</button>
 					<div class="dropdown-menu">
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="/~xorsak02/IIS/src/frontend/html/loginPage.html">Log out</a>
+						<a id="logoutButtonLink" class="dropdown-item" href="/~xorsak02/IIS/src/frontend/html/loginPage.html" onclick="clearSessionStorage();">Log out</a>
 					</div>
 				</div>
 			</li>

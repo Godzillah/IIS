@@ -1,9 +1,12 @@
 /**
- * Function which chossing between roles 1, 2 and 3
+ * Function which chossing between roles 1, 2, 3 and nothing
  * 1 - employee -> will shown only 3 options in sidebar
  * 2 - head -> will shown 4 options in sidebar
  * 3 - manager -> will shown all options in sidebar with employee editing table...
+ * nothing - non authorization user -> redirects him to loginPage.html
  */
+var loginUrl = "/~xorsak02/IIS/src/frontend/html/loginPage.html";
+
 function chooseRole() {
     // clean
     $('#headerNameOfRole').empty();
@@ -36,7 +39,7 @@ function chooseRole() {
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
             "</ul>");
     }
-    else {
+    else if (sessionStorage.getItem("privilegesOfUser") == 3)  {
         $('#headerNameOfRole').append("<h1 id=\"headerNameOfRole\" class=\"white-text mt-2 mb-2\">Admin View</h1>");
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
@@ -51,6 +54,10 @@ function chooseRole() {
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/food.html\">Food</a></li>\n" +
             "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
             "</ul>")
+    }
+    else{
+        // if there is no jwt token defined....
+        window.location.replace(loginUrl);
     }
 }
 
