@@ -35,7 +35,7 @@ $(document).ready(function () {
                     sessionStorage.setItem("privilegesOfUser", JsonObject.payload.privileges);
                     // wait 0.1s because of sessionStorage...
                     setTimeout(function () {
-                        location.href = "/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
+                        location.href = "http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html"
                     }, 100);
                 },
             });
@@ -48,7 +48,11 @@ $(document).ready(function () {
  */
 function wrongRegistrationsInputs() {
     $("#alert").addClass("alert alert-danger");
-    $("#pOnWrongLogin").empty().append("username does not exists");
+    $("#pOnWrongLogin").empty().append("Invalid username or password");
+}
+
+function successRegistrationInputs(){
+
 }
 
 

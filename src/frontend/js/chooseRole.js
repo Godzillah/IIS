@@ -5,7 +5,7 @@
  * 3 - manager -> will shown all options in sidebar with employee editing table...
  * nothing - non authorization user -> redirects him to loginPage.html
  */
-var loginUrl = "/~xorsak02/IIS/src/frontend/html/loginPage.html";
+var loginUrl = "http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/loginPage.html";
 
 function chooseRole() {
     // clean
@@ -17,12 +17,12 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/employee/food.html\">Food</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/employee/food.html\">Food</a></li>\n" +
             "</ul>");
     }
     else if (sessionStorage.getItem("privilegesOfUser") == 2) {
@@ -30,13 +30,13 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/food.html\">Food</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/food.html\">Food</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
             "</ul>");
     }
     else if (sessionStorage.getItem("privilegesOfUser") == 3)  {
@@ -44,15 +44,15 @@ function chooseRole() {
         $('#sidebarForRoles').append("<ul class=\"nav nav-sidebar btn-group-vertical\">\n" +
             "    <li>\n" +
             "        <div id=\"loginLogo\">\n" +
-            "            <a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
+            "            <a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\"><img class=\"img-fluid\" src=\"/~xorsak02/IISimages/logoOfTheRestaurant.png\" alt=\"Chania\"></a>\n" +
             "        </div>\n" +
             "    </li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/statistics.html\">Statistics</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/employees.html\">Employees</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/food.html\">Food</a></li>\n" +
-            "    <li class=\"active w-100 text-center\"><a href=\"/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/statistics.html\">Statistics</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/bookings.html\">Bookings</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/orders.html\">Orders</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/employees.html\">Employees</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/food.html\">Food</a></li>\n" +
+            "    <li class=\"active w-100 text-center\"><a href=\"http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/admin/ingredients.html\">Ingredients</a></li>\n" +
             "</ul>")
     }
     else{

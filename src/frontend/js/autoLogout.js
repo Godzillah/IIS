@@ -17,7 +17,7 @@ $(function () {
 
 // redirect and alert..
 function redirectAndAlert() {
-    location.href = "/~xorsak02/IIS/src/frontend/html/loginPage.html";
+    location.href = "http://www.stud.fit.vutbr.cz/~xorsak02/IIS/src/frontend/html/loginPage.html";
     alert("For inactive 10 minutes you were redirected to loginPage");
 }
 
